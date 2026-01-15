@@ -1,17 +1,76 @@
 ---
-title: Immersive Watch Party
-description: Shared VR viewing that combines Spatial Persona, SharePlay, and immersive video.
-date: "2024-12-01"
+title: Immersive Watch Party SDK
+description: A drop-in binary framework enabling synchronous, spatial video experiences on Apple Vision Pro.
+date: "2025-11-20"
 ---
 
-I built an Immersive Watch Party feature that makes fans feel like they're in the arena together.
+While building [Vantage Sports](/posts/vantage-vr-sports-platform), I encountered a critical friction point in the Apple Vision Pro ecosystem: **VR is isolating.** Watching sports is inherently social, but to do it in VR required building a synchronized, low-latency playback engine with spatial voice chat. It was a pretty immense engineering hurdle.
 
-## What it does
+I extracted, refactored, and productized this infrastructure into the **Immersive Watch Party SDK**. It allows any visionOS developer to add "FaceTime Watch Together" functionality to their app with significantly fewer lines of code.
 
-- Blends Apple's Spatial Persona with SharePlay and immersive video for a shared VR experience.
-- Lets friends co-watch events with presence, not just video playback.
-- First of its kind for this use case.
+<Image src="/immersivewatchparty.jpg" width="1200" height="630" alt="High-level architecture of the SharePlay coordination flow" />
 
-## Skills
+## The Engineering Challenge
 
-iOS, visionOS, Unity, C#, SwiftUI, SharePlay, Spatial Persona, Immersive Video, Full-Stack Development, Analytics.
+Apple's `GroupActivities` framework provides the bricks, but it doesn't handle building the whole house of an immersive application. I had to solve three distinct problems:
+
+1. **Frame-Perfect Sync:** Coordinating `AVPlayer` states across variable network latencies.
+2. **Spatial Context:** Positioning UI and avatars relative to a shared coordinate system that doesn't physically exist for all users.
+3. **Revenue Protection:** Preventing "password sharing" piracy where one paid user hosts a stream for unauthorized free users.
+
+### 1. Abstracting the Math (DX Focus)
+
+One of the hardest parts of visionOS development is managing 3D transforms (`simd_float4x4`). I built a declarative API (`AttachmentRole`) that handles the linear algebra internally.
+
+Developers simply define a role (e.g., `.controlPanel`), and the SDK calculates the quaternion rotations and translations to ensure the UI always faces the user at the optimal ergonomic tilt, regardless of whether they are watching solo or side-by-side with a friend.
+
+```swift
+// The SDK handles the 3D math and state management internally
+// Developers just bind their AVPlayer and define UI roles
+
+ImmersiveSpace(for: StreamModel.self) { $model in
+    ImmersivePlayer(selectedStream: model)
+        .coordinateSharePlay(
+            partyManager: appState.sharePlayManager,
+            player: videoPlayer.player,
+            delegate: videoPlayer
+        )
+}
+```
+
+### 2. Security & Piracy Prevention
+
+A major vulnerability in client-side SharePlay implementations is UUID spoofing. A malicious actor can inject messages claiming to be the "Host" to gain administrative control or bypass paywalls.
+
+I designed a Secure Message Layer within the SDK that mandates server-side verification.
+
+- The Problem: SharePlay messages are unauthenticated by default.
+- My Solution: I implemented a `securityDelegate` pattern. Every privileged action (like "Kick User" or "Start Premium Stream") wraps the payload with a signed JWT. The SDK intercepts the message, validates the token against the backend API, and only passes the event to the client if the server returns 200 OK.
+
+<Image src="/avplakers.jpg" width="1200" height="630" alt="Diagram showing local coordinate space vs shared coordinate space" />
+
+This turns a trust-based client handshake into a Zero Trust architecture, essential for apps streaming licensed sports content. For the NBA, NFL, and other big sports leagues, this could be of great interest to them.
+
+
+
+### 3. Concurrency & State Management
+
+The SDK is built entirely on Swift 6 strict concurrency standards. I utilize `@MainActor` isolation for UI-bound state tracking (like active participants) while offloading heavy coordination tasks to detached `Task`s.
+
+I implemented a custom `SystemCoordinatorManager` that observes the `GroupSession` state. It handles the "Cold Start" problem where a user might accept a FaceTime invitation before the app has fully launched, queueing the activity and fulfilling it once the Immersive Space is ready.
+
+## The Product Impact
+
+I soon realized that this was a pretty huge feature... By packaging this as a reusable binary (`.xcframework`), I could:
+- Helping the community: Other devs can integrate this feature much more easily than building it from scratch.
+- Rapid Iteration: New features in Vantage Sports are now decoupled from the core networking logic.
+- Potential Licensing: The SDK is designed with a license-key activation flow, opening a B2B revenue stream for other media companies entering the spatial computing market.
+
+<Image src="/immersivewatchparty-github.png" width="1200" height="630" alt="Demo of two users syncing playback instantly" />
+
+
+## Try it yourself!
+
+If you're an immersive video app developer and you'd like to integrate this cutting-edge feature, check out the repo here:
+
+[Vantage-Kit ImmersiveWatchPartySDK GitHub Repo](https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK)

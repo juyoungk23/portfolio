@@ -4,7 +4,6 @@ const { withContentlayer } = require("next-contentlayer");
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'export', // Required for GitHub Pages static export
 };
 
 module.exports = withContentlayer(nextConfig);

@@ -1,0 +1,71 @@
+---
+title: SHARP Memories
+description: Converting 2D photos into immersive 3D Gaussian Splats using a serverless, event-driven architecture.
+date: "2026-01-13"
+---
+
+SHARP Memories is a cross-platform (web, iOS, visionOS) application that democratizes 3D capture. It allows users to turn a single 2D photo into a fully immersive **3D Gaussian Splat** that can be viewed and shared on iOS, the web, and Apple Vision Pro.
+
+Most 3D capture tools require LiDAR or 50+ images. By leveraging Apple's open-source <a href="https://github.com/apple/ml-sharp" target="_blank" rel="noopener noreferrer">SHARP model</a>, I built a pipeline that requires only one input image, making 3D memory capture accessible to anyone with a smartphone.
+ 
+The coolest part is that this app makes sharing these 3D memories super easy by syncing across multiple devices.
+
+<Image src="/sharp-memories-iOS-3.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" />
+## The Sharability Approach
+
+Although I could've made the device generate and store the gaussian splats locally, I had it in mind to keep sharability at the forefront of the experience. The goal was for users to feel like they "revived" a photo, and share it because of how cool it is. I focused heavily on **distribution** and **retention**.
+
+### 1. Virality via App Clips
+But the truth is people don't want to download another random app. To solve the "cold start" problem, I built an iOS App Clip. When a user shares a memory via iMessage, the recipient doesn't need to download the full app. They tap the link, and the 3D model renders instantly in a lightweight viewer (< 15MB). This reduces friction and creates a natural viral loop.
+
+### 2. The "Snapchat" Mechanics
+To keep this project in the free tier and still release it publicly, I implemented a "Snapchat-style" lifecycle:
+* **0-24 Hours:** Memories are fully visible in 3D.
+* **24 Hours - 7 Days:** Memories "fade" (turn gray). Users must tap to "resurrect" them, triggering a re-generation.
+* **7+ Days:** Hard deletion to respect user privacy and storage limits.
+
+<Image src="/sharp-memories-resurrect.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" />
+
+
+This is because gaussian splats can be large files (60MB). So, to prevent my free Cloudflare R2 bucket from filling quickly, I decided to delete the large files after 24 hours but keep the smaller images for 7 days and to let users preview the "faded" memory.
+
+Here's how I did it more specifically.
+
+## Architecture: The "Free Tier" Stack
+
+One of my primary constraints was cost. Storing gigabytes of PLY (point cloud) files is expensive. I engineered a hybrid storage solution that leverages the best free tiers of different providers.
+
+### The Event-Driven Pipeline
+
+The backend is fully serverless and asynchronous, ensuring the UI never blocks while the GPU crunches data.
+
+1.  **Ingestion:** The client uploads the raw 2D image to **Supabase Storage** (1GB Free Tier). 
+2.  **Trigger:** An Edge Function inserts a row into the `splats` table.
+3.  **Inference:** A Supabase Database Webhook detects the `INSERT` and calls the `trigger-inference` Edge Function.
+4.  **GPU Processing:** The function calls **Modal AI**, where I host the Python ML inference code on serverless NVIDIA T4 GPUs. Modal returns a `200 OK` immediately so the connection doesn't hang.
+5.  **Storage Optimization:** Once generated, the heavy PLY file (~60MB+) is uploaded to **Cloudflare R2** (10GB Free Tier), which offers zero egress fees.
+6.  **Realtime Feedback:** The clients subscribe to Supabase Realtime updates. As soon as the status flips to `completed`, the UI updates automatically.
+
+```typescript
+// Example: Supabase Edge Function snippet for triggering inference
+Deno.serve(async (req) => {
+  const payload = await req.json();
+  const { record } = payload;
+
+  // Offload to Modal AI (Python)
+  const response = await fetch("https://modal-api-url/generate", {
+    method: "POST",
+    body: JSON.stringify({ image_url: record.input_image_url }),
+  });
+
+  return new Response("Inference Started", { status: 200 });
+});
+```
+
+## Try it out!
+
+Feel free to try it for yourself! Visit <a href="https://sharpmemories.app/" target="_blank" rel="noopener noreferrer">https://sharpmemories.app/</a>, upload a photo (will need an account), and play around with the 3D memory. I'm sure it will bring you a curious sense of nostalgia.
+<Image src="/sharp-memories-website-1.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" />
+
+This project was a lot of fun to make, especially because I could view it from both my phone, laptop, and even the Vision Pro. Plus, I could share it with people!
+
