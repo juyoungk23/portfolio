@@ -10,7 +10,7 @@ Most 3D capture tools require LiDAR or 50+ images. By leveraging Apple's open-so
  
 The coolest part is that this app makes sharing these 3D memories super easy by syncing across multiple devices.
 
-<Image src="/sharp-memories-iOS-3.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" />
+<Image src="/sharp-memories-iOS-3.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/AIN8eF5VTtfT0Nvc3dbV1C8vLwAAAA4ODgAAAAQDAwB+ZFWKdF+fmJGysbK1raYzMCwYFA8mIBcyJxYrJx8AqJOKrp6Usaefz9XOqZSPOyklS0I3RDorUT4oHhoVAPb6+PHu6dfZ2cTHxreWjF9MRVNJQTYtIlhLPx8cGgDZ5dnz//La4tzRzM3S09dAQURWUlFBOjQQDgkJCAcAX2BVhI56enxzw8LE4O32LTI3UlpiFBIRAAAAAAAAGwFMm6L+eQ4AAAAASUVORK5CYII=" />
 ## The Sharability Approach
 
 Although I could've made the device generate and store the gaussian splats locally, I had it in mind to keep sharability at the forefront of the experience. The goal was for users to feel like they "revived" a photo, and share it because of how cool it is. I focused heavily on **distribution** and **retention**.
@@ -24,7 +24,7 @@ To keep this project in the free tier and still release it publicly, I implement
 * **24 Hours - 7 Days:** Memories "fade" (turn gray). Users must tap to "resurrect" them, triggering a re-generation.
 * **7+ Days:** Hard deletion to respect user privacy and storage limits.
 
-<Image src="/sharp-memories-resurrect.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" />
+<Image src="/sharp-memories-resurrect.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAwElEQVR4nCXOsQqCQBgA4HupIAjpOdoaGnJodJJoDInK9A8K79Q86aw8rsK8IXRqaGuKoLDncIgK6nuCD62jDY9FkqSKoqAfXe+WZVkUxef9QhiT+cyZTGwAkFKGYQhg58fDbr1aWj1EachYhDEhhFAaANgRY4/b9Xm/Xc4n5BIv8ANn7hiG0VbVRrNlmqYFY8Yw86fI83zXdY2hBQBelFQ7tD8wY5GI3V4wijgXeZaNFttKrf6vaZqWZblMJefiCx4uaXvWWBMlAAAAAElFTkSuQmCC" />
 
 
 This is because gaussian splats can be large files (60MB). So, to prevent my free Cloudflare R2 bucket from filling quickly, I decided to delete the large files after 24 hours but keep the smaller images for 7 days and to let users preview the "faded" memory.
@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
 ## Try it out!
 
 Feel free to try it for yourself! Visit <a href="https://sharpmemories.app/" target="_blank" rel="noopener noreferrer">https://sharpmemories.app/</a>, upload a photo (will need an account), and play around with the 3D memory. I'm sure it will bring you a curious sense of nostalgia.
-<Image src="/sharp-memories-website-1.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" />
+<Image src="/sharp-memories-website-1.jpg" width="1200" height="630" alt="SHARP Memories App Showcase" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/AO/w8ODf3uvc2fv5+dDJv9XQxNXLwcTCsm2ombLX+AD29/h4aVx+NyXu39x9XzeyrY6XiGqpoJM5MzLKysoA/f7+j5mgi5Sf8/Dsk206lo53k4FyhoRzPTwyxsbKAPz+/4uUmn6VoO/w8HhWL2JDK3xdQnNaNDs0JcvMzgD6+/uEenGblIfy8O5NKwk7GgAqCwASAAAJAQDQ0dEA/v38u3t4woSD8fDwUFNUPkFFQkdJQUNGS0xN4+PjE+1oZ4GzA/oAAAAASUVORK5CYII=" />
 
 This project was a lot of fun to make, especially because I could view it from both my phone, laptop, and even the Vision Pro. Plus, I could share it with people!
 

@@ -8,7 +8,7 @@ While building [Vantage Sports](/posts/vantage-vr-sports-platform), I encountere
 
 I extracted, refactored, and productized this infrastructure into the **Immersive Watch Party SDK**. It allows any visionOS developer to add "FaceTime Watch Together" functionality to their app with significantly fewer lines of code.
 
-<Image src="/immersivewatchparty.jpg" width="1200" height="630" alt="High-level architecture of the SharePlay coordination flow" />
+<Image src="/immersivewatchparty.jpg" width="1200" height="630" alt="High-level architecture of the SharePlay coordination flow" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nAG6AEX/AFIfJbNSWfN9h+VlZZ1NU09FTwAECUU3ORAQFQUJEABNLC9pNTfaaWbSV1SCUFo/N0AbFxn9vrAQEBQECQ8AaioxijIxtUc24F1FbysvMCcpOS8zyp2YbE9MBQYNAJRYZ/aFiv+Njf+DhrBwelpDQvK5qv/Er//pyxIQEgD/zdjUqbm7l6qchJWql6o9MztVPkhVQU2+ioAXFBcAlIKShW1+h3B/gG17w6y7IBsjAQUQFhYjExEbDAwSVnNFmN7jRt4AAAAASUVORK5CYII=" />
 
 ## The Engineering Challenge
 
@@ -47,7 +47,7 @@ I designed a Secure Message Layer within the SDK that mandates server-side verif
 - The Problem: SharePlay messages are unauthenticated by default.
 - My Solution: I implemented a `securityDelegate` pattern. Every privileged action (like "Kick User" or "Start Premium Stream") wraps the payload with a signed JWT. The SDK intercepts the message, validates the token against the backend API, and only passes the event to the client if the server returns 200 OK.
 
-<Image src="/avplakers.jpg" width="1200" height="630" alt="Diagram showing local coordinate space vs shared coordinate space" />
+<Image src="/avplakers.jpg" width="1200" height="630" alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
 
 This turns a trust-based client handshake into a Zero Trust architecture, essential for apps streaming licensed sports content. For the NBA, NFL, and other big sports leagues, this could be of great interest to them.
 
@@ -66,7 +66,7 @@ I soon realized that this was a pretty huge feature... By packaging this as a re
 - Rapid Iteration: New features in Vantage Sports are now decoupled from the core networking logic.
 - Potential Licensing: The SDK is designed with a license-key activation flow, opening a B2B revenue stream for other media companies entering the spatial computing market.
 
-<Image src="/immersivewatchparty-github.png" width="1200" height="630" alt="Demo of two users syncing playback instantly" />
+<Image src="/immersivewatchparty-github.png" width="1200" height="630" alt="Demo of two users syncing playback instantly" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA8klEQVR4nEXMMUvDUBSG4Yv/qeBPEMXJVVyUbi4i7qYdapG2OjhZhzYtVKzUm5BqkkItSiFZQhbN0gRF0010CXV5xRvQ4R0O5+ETlcoRO8Wiqnd5xWTywPDORhpDLlo6rbaubgHQ719zqJWxnRFPzxFRFLG5vcvKxhavLwnvaZrDW9ul3jjB93063R6zOFbpnS5BEPySHLruCM/zyLIMaZgkSaJq67pa/4OWZaFpGufNJqVSGcdx1HMgTR6n3j+sN04RYgkhBPt7B4zvx4RhiBzccFar8RbPcmiaFoXCMmur61Srx2pZGgbzecrX5wffiwU/r+Ha9B4QnXwAAAAASUVORK5CYII=" />
 
 
 ## Try it yourself!
