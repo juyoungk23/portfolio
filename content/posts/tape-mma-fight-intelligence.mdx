@@ -1,0 +1,31 @@
+---
+title: TAPE — AI Fight Analysis from Broadcast Video
+description: A solo-built system that turns ordinary MMA broadcast footage into verified, coach-ready fight analytics — every number traceable back to the tape.
+date: "2026-07-07"
+---
+
+**TAPE** watches MMA fights the way an analyst would — from a single, ordinary broadcast video — and turns them into numbers a coach can trust: what a fighter throws, what they go to after the jab, how their output changes round by round.
+
+## How it works
+
+- **AI watches the tape.** Computer vision finds the two fighters, tracks their bodies frame by frame, and flags every moment that looks like a strike — deliberately over-sensitive, so nothing gets missed.
+- **A human confirms.** A purpose-built review tool plays each flagged moment in a slow-motion loop; a reviewer judges it in about a second with a single keystroke. Every published stat traces back to specific, verified moments on video — receipts, not vibes.
+- **Honesty is a feature.** When there isn't enough data to say something, the system says exactly that instead of guessing. Every number ships with its sample size and error bars.
+
+## The product
+
+A private site where each fighter has an intelligence page — striking tendencies, sequences, round-by-round pace — plus an AI analyst you can ask questions in plain English. The twist: **the AI is never allowed to compute a statistic.** All numbers come from a deterministic engine over the verified data; the AI only routes questions and explains results. If the data can't support an answer, it refuses and says why.
+
+There's also a contributor mode: anyone can help review fights, their accuracy is quietly measured against known answers, and trust (and credit) is earned in tiers — so the dataset can grow without ever compromising quality.
+
+## Why it's hard
+
+One camera, constant cuts, motion blur, and two athletes who look alike at a distance. Most of the engineering isn't making the AI see — it's knowing exactly when it can't, and building every layer so an "I don't know" beats a confident wrong answer.
+
+## Where it stands
+
+More than a dozen fights and thousands of individually verified strike judgments, with the site live in private preview.
+
+## Tech Stack
+
+Python, PyTorch (pose estimation + detection models), Next.js, React, Claude API, Supabase, Vercel.
