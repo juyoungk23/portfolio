@@ -1,12 +1,14 @@
 ---
-title: "TAPE: AI Fight Analysis from Broadcast Video"
-description: A solo-built system that turns ordinary MMA broadcast footage into verified, coach-ready fight analytics. Every number traces back to the tape.
-date: "2026-07-07"
+title: "TAPE: What I Learned Turning Fight Broadcasts into Numbers a Coach Can Trust"
+description: A solo-built system that turns ordinary MMA broadcast footage into verified, coach-ready fight analytics. Here's the product, the stack, and the lessons that cost me real money and sleep.
+date: "2026-07-09"
 ---
 
-**TAPE** watches MMA fights the way an analyst would, from a single ordinary broadcast video, and turns them into numbers a coach can trust: what a fighter throws, what they go to after the jab, how their output changes round by round.
+**TAPE** watches MMA fights the way an analyst would, from a single ordinary broadcast video, and turns them into numbers a coach can trust: what a fighter throws, what he goes to after the jab, how his output changes round by round. Every number links back to timestamps on the tape. When the data can't support an answer, the site says so instead of guessing.
 
-<Image src="/tape/home.png" alt="TAPE home page: fighter intelligence built from verified tape" width={1400} height={1364} className="rounded-lg border border-slate-200 dark:border-slate-800" />
+I built it alone: the computer vision pipeline, the training and evaluation harness, the labeling tool, and the product site. This post is the honest version of what that took.
+
+<Image src="/tape/home.png" alt="TAPE home page: fighter intelligence built from verified tape" width={1440} height={1364} className="rounded-lg border border-slate-200 dark:border-slate-800" />
 
 ## How it works
 
@@ -29,35 +31,55 @@ date: "2026-07-07"
   </div>
 </div>
 
-- **AI watches the tape.** Computer vision finds the two fighters, tracks their bodies frame by frame, and flags every moment that looks like a strike. It is deliberately over-sensitive so nothing gets missed.
-- **A human confirms.** A purpose-built review tool plays each flagged moment in a slow-motion loop, and a reviewer judges it with a single keystroke. Every published stat traces back to specific, verified moments on video. Receipts, not vibes.
-- **Honesty is a feature.** When there isn't enough data to say something, the system says exactly that instead of guessing. Every number ships with its sample size and error bars.
+Under the hood it's a five-layer pipeline, and every layer is allowed to say "I don't know":
+
+`video → identity → pose → strike detector → classifier → analytics`
+
+**Identity** figures out who is who. A box tracker will happily lock onto the referee, and one identity mistake poisons every layer above it. My worst fight had 105 identity swaps per minute before the fix, and zero after. **Pose** extracts where every body part is, using three models with three jobs: YOLO26x-pose as the cheap spine, Meta's Sapiens (308 keypoints, run on cloud H100s via Modal) as the primary source, and HMR2 as a quarantined gap filler I'll complain about below. The **detector** decomposes a strike into physical witnesses that vote: endpoint speed, direction toward the opponent, body commitment, foot lift and knee chamber for kicks. It deliberately over-fires so it misses almost nothing, around 90 to 98 percent recall. The **classifier**, currently CatBoost, cleans that stream. And **analytics** computes tendencies over verified events only, with confidence intervals and sample sizes on everything.
+
+A human sits in the middle of all of this on purpose. My review tool plays each flagged moment in a slow-motion loop and takes a verdict in a single keystroke, about 7 or 8 verdicts a minute. Machine surfaces, human decides, and the published stats come from the human tier. Receipts, not vibes.
 
 <Image src="/tape/labeler.png" alt="The review tool: one flagged moment at a time, judged with single keystrokes" width={1400} height={875} className="rounded-lg border border-slate-200 dark:border-slate-800" />
 
-## The product
+## The technical lessons
 
-A private site where each fighter has an intelligence page: striking tendencies, sequences, round-by-round pace.
+**Measure the input before you build on it.** Every single time I finally measured something I had assumed, it was worse than assumed. Zero exceptions across the whole project. The funniest version: I once consumed what I believed were Sapiens foot keypoints for kick detection. When a render finally forced me to check the index map, they were face points. Third index-map trap of the project. Now nothing gets consumed without a ten-frame overlay render first.
 
-<Image src="/tape/fightiq.png" alt="Fight IQ page: what a fighter throws after each trigger, with sample sizes" width={1400} height={1006} className="rounded-lg border border-slate-200 dark:border-slate-800" />
+**Cheap and validated beats fancy and assumed.** I ran a bake-off that entered five state-of-the-art models against my measurement harnesses. The winners were a 200-line classical tracking gate, a column swap, and a segmentation mask. CoTracker3, a point tracker I was excited about for motion blur, recovered 10 percent of lost tracks and failed on 87 percent of easy controls. A temporal CNN lost to gradient boosting at my label count. The expensive foundation tracker, SAM 3, earned exactly one role: fire department. The cheap gate self-diagnoses when a fight is too messy for it, and only then does the fight go to the cloud. You don't send the fire department to every house.
 
-There's also an AI analyst you can ask questions in plain English, with a twist: **the AI is never allowed to compute a statistic.** All numbers come from a deterministic engine over the verified data, and the AI only routes questions and explains results. If the data can't support an answer, it refuses and says why.
+**Confidence that can't abstain is worthless.** HMR2, the 3D mesh model, reports confidence 1.0 on every frame forever. Under occlusion it invents a plausible limb and swears by it. Its body model is a template, so every fighter gets identical 0.25 meter forearms, including the longest-reach fighter in UFC history. And its depth signal is drift, which I refuted three separate times before I believed it. The lesson generalizes: a model that cannot say "I don't know" will eventually lie to you at full confidence, and everything downstream inherits the lie.
+
+**Automation over-corrects. All of it.** Every automated identity-swap fixer I built or borrowed, the geometry gate, the embedding corrector, even the foundation tracker applied outside its certified windows, flipped fighters that my own eyes confirmed were already correct. The reliable baseline was the raw tracking. The fix that survived is deliberately boring: only re-slot identities on frames a certified escalation actually covered, and hard-fail the pipeline if anything else tries. Related trap: a perfectly stable track can be stably wrong. Stability metrics measure agreement, not truth. Only a render tells you the truth.
+
+**Pre-register your acceptance bars, then let them kill your darlings.** Every experiment states its pass bar before it runs, and the verdict is computed, never vibed. This killed a fusion feature I was sure about in one session instead of letting it calcify into the stack. It also killed my favorite headline claim. I wanted to show that the system sees Topuria's famous third-round surge. Ground truth says his output ramps 2.14x. The machine measured 1.12x, four vintages in a row. The reason turned out to be physics: at 30fps, strikes in a finishing flurry merge into one velocity peak, so no candidate ever forms. That is a capture limit of archival broadcast footage, not a tuning problem. So the product discloses it instead of claiming it. Shipping the refusal was the right call, and honestly, it stung.
+
+**Small data demands boring rigor.** The classifier corpus is a few thousand human verdicts, with 558 strike events across five evaluation folds. At that size, leakage and threshold games will happily hand you a fake champion. So: nested leave-one-fight-out cross-validation, paired bootstrap on the deltas, and one pre-registered bar. CatBoost dethroned my incumbent by winning six out of six folds with a confidence interval that excludes zero. One threshold for everything also turned out to be wrong: kicks are much easier to classify than punches at fixed precision, so per-kind operating points are mandatory. And when I report the win, I report the honest ladder: the gain that ships today is smaller than the gain validated in the eval, because parts of it wait on follow-up work. Writing that sentence down keeps me from believing my own press.
+
+**LLMs make good witnesses and bad judges.** I tested Gemini as a strike judge. Standalone it ran about 27 percent false positives. Useless as a referee. But fed into the classifier as a feature, its verdict, score, and context fields passed all three frozen adoption bars and got selected first in every fold. Same model, different seat at the table. The cost tiering mattered too: the flash-lite tier keeps about 86 percent of the pro tier's signal at a tenth of the price. And my favorite micro-result: giving the model a slow-motion "replay" clip made it strike-happy and cost 14 points of accuracy. More context is not automatically better context.
+
+**Cloud ops will tax you exactly once per lesson, if you write the lesson down.** SAM 3 leaked past 90GB of RAM and froze my Mac Studio, so heavy models run on Modal, full stop. A missing skip-if-exists guard silently relaunched a batch and burned money. Two fights sharing fixed volume paths clobbered each other's outputs. A 90-minute function cap killed a pose run at 93 percent complete, and the job checkpointed but didn't resume, so it restarted from scratch. Every one of those is now a rule in the repo: dry-run by default, hard budget caps, per-fight paths, resumable checkpoints, generous timeouts with per-chunk progress commits.
+
+## The product lessons
+
+**Honesty is the moat, not a disclaimer.** The pack that powers the site currently has 724 stat cells, and 447 of them say "insufficient data" with the reason and what would unlock them. That ratio is the product. A coach who catches you bluffing once will never trust the sheet again. So refusals are designed as first-class states: a cell that needs more data shows a progress meter toward its pre-registered gate, and a thing the broadcast physically cannot support says so in a categorically different visual state. A lock is progress. A wall is physics. They must never look alike.
+
+**Two readers, one page.** The coach wants the read: what does this guy do, what does it open. The auditor wants the proof: sample size, confidence interval, provenance, what was refused. The design answer was layers, not volume. The claim leads, the evidence line (CI and n) is always visible, and the full audit trail sits one click down: timestamps, the registered upload they index, and at the deepest layer, the engine seeds and gates. Nothing honest gets hidden; it gets staged.
+
+**Force the numbers through one door.** The site has a lint gate that fails the build if any stat-rendering component contains a digit character in its source. Every number on screen must arrive as a string from the verified data layer. It sounds pedantic until you realize what it makes impossible: a well-meaning UI edit can never invent, round, or "fix" a statistic. The same rule shapes the AI analyst. It is never allowed to compute; it routes plain-English questions to a closed registry of verified queries and explains the results. If the data can't answer, it says why.
+
+<Image src="/tape/fightiq.png" alt="Fight IQ: the top conditional read charted with its confidence interval, above the full trigger matrix" width={1440} height={1030} className="rounded-lg border border-slate-200 dark:border-slate-800" />
+
+**Speak in trends, not decimals.** Per-round counts sit on a Poisson floor of roughly plus or minus 20 percent, so the product language is trends and conditionals, never single-round precision. Rates get honest denominators too: kick rates count only minutes where legs are actually visible in frame, because about 18 percent of broadcast frames crop them out. And every page discloses that the ground truth is one annotator's judgment, which itself misses an estimated 11 to 15 percent of strikes. Every count is a floor, and the site says so.
 
 <Image src="/tape/analyst.png" alt="The analyst chat: plain-English questions, engine-computed answers with receipts" width={1400} height={914} className="rounded-lg border border-slate-200 dark:border-slate-800" />
 
-Contributors can help too: anyone can review fights, their accuracy is quietly measured against known answers, and trust (and credit) is earned in tiers. The dataset grows without ever compromising quality.
-
-## Why it's hard
-
-One camera, constant cuts, motion blur, and two athletes who look alike at a distance. Most of the engineering isn't making the AI see. It's knowing exactly when it can't, and building every layer so an honest "I don't know" beats a confident wrong answer.
-
 ## Where it stands
 
-More than a dozen fights and thousands of individually verified strike judgments, with the site live in private preview.
+Twenty-two fighters on file across verified and machine tiers, about 1,250 hand-logged strikes and a few thousand adjudicated detector candidates, a live site with per-fighter reports, a printable scout sheet, and a contributor labeling flow where reviewer accuracy is quietly measured against known answers before their verdicts count. The single-camera constraint I started with turned out to be the point: anyone can buy a multi-camera lab feed, but a system that extracts trustworthy numbers from the footage that actually exists for every fighter is the thing worth building.
 
-## Tech Stack
+## Tech stack
 
-Python, PyTorch (pose estimation + detection models), Next.js, React, Claude API, Supabase, Vercel.
+Python, PyTorch, YOLO26x-pose, Meta Sapiens on Modal H100s, SAM 3 for escalations, CatBoost, Gemini as a feature extractor, and a Next.js + React site with server-rendered SVG charts, Supabase auth and storage, Claude API for the analyst, deployed on Vercel.
 
 ## See it live
 
