@@ -5,7 +5,7 @@ export const metadata = {
   description: "Get in touch with Juyoung Kim: email, GitHub, LinkedIn.",
 }
 
-const EMAIL = "juyoung0430@gmail.com"
+const EMAIL = "juyoungk23@gmail.com"
 
 const CHANNELS = [
   {
