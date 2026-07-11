@@ -1,11 +1,11 @@
 ---
 title: "Vantage: Immersive Combat Sports Platform"
-description: A VR180 broadcast platform on the Apple Vision Pro featuring a novel Spatial Watch Party SDK.
+description: A VR180 combat sports platform for Apple Vision Pro, with watch parties built on a custom SharePlay stack.
 date: "2024-10-18"
 ---
 
 I'm a huge UFC fan and this is my passion project. 
-<a href="https://apps.apple.com/us/app/vantage-vr/id6698850979" target="_blank" rel="noopener noreferrer">Vantage</a> is a cross-platform (visionOS, Meta Quest) immersive sports network built to solve the isolation problem in VR. It combines high-fidelity stereoscopic VR180 capture with a novel social layer that synchronizes playback across devices with minimal latency.
+<a href="https://apps.apple.com/us/app/vantage-vr/id6698850979" target="_blank" rel="noopener noreferrer">Vantage</a> is a cross-platform (visionOS, Meta Quest) immersive sports network built to solve the isolation problem in VR. It combines stereoscopic VR180 capture with a social layer that keeps playback in sync across devices with minimal latency.
 
 <Image src="/vantage-sim-screenshot.jpg" width="1200" height="630" alt="Demo of two users syncing playback instantly" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/AOjaws3Iurq6tsrGwcvIxdna2e7u9P79/9zc3MvIvwDw5MTBp5OEUkJBMTAlJTcuLEJSSldjYG2Xko7OxrYA3Nu51KyG13hHIg8BAQATFQA0XVRWgHx5c2xiq6GNAP/+8baqoGlLQTYxKyYsLjA1Q1ReYUtOT354cqmmmgDk5Nurinx2RTNpaml3fn1+hoRXYmc5Sltoc3WelIYAf3RiVT0hgGRLfXJjkoh53Mu4/+7c7ejcf3dniXtpxWteyEFC9IkAAAAASUVORK5CYII=" />
 
@@ -31,34 +31,35 @@ Building a Netflix-style VOD app is a solved problem. Building a **synchronous, 
 
 <YouTube id="https://www.youtube.com/watch?v=-JIjuuig14k" autoplay muted />
 
-The best way to experience this type of content is on the Apple Vision Pro, with full stereoscopic playback. However, considering the number of people who may own a Vision Pro, I built an iOS client that has a "Magic Window" experience. Users on the iPhone app can point their phones to look around within the video, like how you may have seen it in YouTube VR. 
+The best way to experience this content is on the Apple Vision Pro, with full stereoscopic playback. But almost nobody owns a Vision Pro, so I built an iOS client with a "Magic Window" experience: you point your phone to look around inside the video, like YouTube VR.
+
 ## Core Engineering Features
 
 ### 1. The "Simulated Live" Premieres
-Live events are much more exciting because we don't yet know the outcome. The story is unfolding in realtime. Although doing a true, fully live stereoscopic broadcast was not feasible, I figured I could get most of the way there and provide fans like me an awesome experience by "simulating" a live broadcast.
+Live events are much more exciting because we don't yet know the outcome. The story is unfolding in realtime. A true live stereoscopic broadcast wasn't feasible, but I figured I could get most of the way there by "simulating" one.
 
-Just like how Apple's recent WWDC events are pre-edited, but still "live", I architected a pipeline that injects pre-produced VR180 content into a live HLS stream.
-* **Outcome:** Delivers the excitement and urgency of a live PPV event with the production quality of post-processed video.
+Just like Apple's recent WWDC keynotes, which are pre-edited but still "live," I built a pipeline that injects pre-produced VR180 content into a live HLS stream.
+* **Outcome:** The urgency of a live PPV event with the production quality of edited video.
 * **Tech:** Custom HLS manifest generation, synchronized start triggers, and a single big button to simplify UX.
 
 ### 2. Immersive Watch Party - SharePlay Architecture
 Apple's `GroupSessionMessenger` is unauthenticated by default, allowing malicious clients to spoof `senderUUID` and hijack sessions.
 * **Solution:** I implemented a **signed-message protocol**. Critical actions (e.g., "Start Event", "Kick User") are wrapped in a JWT and verified against a Supabase/Edge Function backend before propagation.
-* **Result:** A trust-less architecture that protects paid content and prevents "griefing" in public lobbies.
+* **Result:** A zero-trust architecture that protects paid content and prevents "griefing" in public lobbies.
 
 ### 3. Custom RealityKit Player (Forked)
 Apple's native `AVPlayerViewController` does not support custom immersive environments (like side-by-side Spatial Personas) alongside 3D video.
-* **Implementation:** Forked an <a href="https://github.com/mikeswanson/SpatialPlayer" target="_blank" rel="noopener noreferrer">open-source RealityKit player</a> to gain low-level access to the render loop, enabling the composition of 3D video textures *behind* the translucent Spatial Persona layer.
+* **Implementation:** Forked an <a href="https://github.com/mikeswanson/SpatialPlayer" target="_blank" rel="noopener noreferrer">open-source RealityKit player</a> for low-level access to the render loop, so I could composite 3D video textures *behind* the translucent Spatial Persona layer.
 
 <Image src="/vantage-app-store.png" width="1200" height="630" alt="Demo of two users syncing playback instantly" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAACXBIWXMAABYlAAAWJQFJUiTwAAABZklEQVR4nDXLv0sbcRjH8Wdx62YqIkJLUTK0FAQJtCJEpJggtFsIOEgC0UDTQBEUBXVoC9JCh26ujkZLcv4guHTpX1AoZBFaaYjnXb53973kEjX4Fk86vIbnzecRX4bx5QkteUaQfEM7Nk3w4hVBPIEvEXyRkJyHx2N+SYSKDLEng6GSRDgR4YcIP++GzYMD/MMj/pUNaobBb+OI2uExf6pVzgyDv+Uyp6V95PtelY21LRazC+Tn5lktvmPn2wYrhTzF4ltyuTyVSglZSs8zIsLYgwEeiTDUJ2Snoow/jDAafUr/6HMKmTlk9+s2qckEqfgMr2MTTL2c4MtKhvRskvfL62x+/MTnD5tIU2nOzSaq6eI6Gu1qtOPSarXxPR267F4jjcYFtq1oB11a7YBO55Krqx69Htzc3LvugTTqdUzTxHU9lPLCJ2VbOMoJm+O4aO0jnqcxTQvLskNKOdiWHbb/3fN8bgE0/B8avMFvzQAAAABJRU5ErkJggg==" />
 
 
 ## The Pivot to B2B: ImmersiveWatchParty SDK
 
-Recognizing that the core value of Vantage was its networking stack, I extracted the synchronization logic into a standalone binary framework.
+The most valuable thing in Vantage turned out to be its networking stack, so I extracted the synchronization logic into a standalone binary framework.
 
-* **Product:** A drop-in Swift package that enables any visionOS app to add "FaceTime Watch Together" functionality.
-* **Strategy:** While the B2C combat sports market matures, this SDK can be great for other businesses entering the spatial era.
+* **Product:** A drop-in Swift package that lets any visionOS app add "FaceTime Watch Together."
+* **Strategy:** The consumer market will take time to mature. Licensing the sync stack to other media companies doesn't have to wait.
 
 ## Content & Partnerships
 
@@ -69,7 +70,7 @@ Recognizing that the core value of Vantage was its networking stack, I extracted
 ## Data-Driven Iteration
 
 * **Discovery:** People needed a way to find others to watch with. Not many people own a Vision Pro, so I built an in-app "Lobby" system that connects users with other sports fans over a FaceTime call.
-* **Retention:** Analysis of session data revealed that while daily active users (DAU) remain relatively low due to hardware friction, **Session Duration** for social users is extremely high (~20m+), validating the "Social VR" thesis.
+* **Retention:** DAU stays low (hardware friction is real), but social sessions regularly run past 20 minutes, which validates the "Social VR" thesis.
 
 ## From the Stands to the Headset
 

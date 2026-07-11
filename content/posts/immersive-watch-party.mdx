@@ -1,6 +1,6 @@
 ---
 title: Immersive Watch Party SDK
-description: A drop-in binary framework enabling synchronous, spatial video experiences on Apple Vision Pro.
+description: A drop-in binary framework for synced, social video playback on Apple Vision Pro.
 date: "2025-11-20"
 ---
 
@@ -12,7 +12,7 @@ So I extracted that infrastructure and productized it as the **Immersive Watch P
 
 ## The Engineering Challenge
 
-Apple's `GroupActivities` framework provides the bricks, not the house. I had to solve three distinct problems:
+Apple's `GroupActivities` framework provides the bricks, not the house. I had to solve three problems:
 
 1. **Frame-Perfect Sync:** Coordinating `AVPlayer` states across variable network latencies.
 2. **Spatial Context:** Positioning UI and avatars relative to a shared coordinate system that doesn't physically exist for all users.
@@ -22,7 +22,7 @@ Apple's `GroupActivities` framework provides the bricks, not the house. I had to
 
 One of the hardest parts of visionOS development is managing 3D transforms (`simd_float4x4`). I built a declarative API (`AttachmentRole`) that handles the linear algebra internally.
 
-Developers simply define a role (e.g., `.controlPanel`), and the SDK calculates the quaternion rotations and translations to ensure the UI always faces the user at the optimal ergonomic tilt, regardless of whether they are watching solo or side-by-side with a friend.
+Developers define a role (e.g., `.controlPanel`), and the SDK calculates the quaternion rotations and translations so the UI always faces the user at a comfortable tilt, whether they're watching solo or side-by-side with a friend.
 
 ```swift
 // The SDK handles the 3D math and state management internally
@@ -42,14 +42,11 @@ ImmersiveSpace(for: StreamModel.self) { $model in
 
 A major vulnerability in client-side SharePlay implementations is UUID spoofing. A malicious actor can inject messages claiming to be the "Host" to gain administrative control or bypass paywalls.
 
-I designed a Secure Message Layer within the SDK that mandates server-side verification.
-
-- The Problem: SharePlay messages are unauthenticated by default.
-- My Solution: I implemented a `securityDelegate` pattern. Every privileged action (like "Kick User" or "Start Premium Stream") wraps the payload with a signed JWT. The SDK intercepts the message, validates the token against the backend API, and only passes the event to the client if the server returns 200 OK.
+SharePlay messages are unauthenticated by default, so I designed a Secure Message Layer that requires server-side verification: a `securityDelegate` pattern where every privileged action (like "Kick User" or "Start Premium Stream") wraps its payload in a signed JWT. The SDK intercepts the message, validates the token against the backend API, and only passes the event to the client if the server returns 200 OK.
 
 <Image src="/avplakers.jpg" width="1200" height="630" alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
 
-This turns a trust-based client handshake into a zero-trust architecture. If you're streaming licensed sports content, whether you're me or the NBA, you need this.
+The client handshake goes from trust-based to zero-trust. If you're streaming licensed sports content, whether you're me or the NBA, you need this.
 
 
 

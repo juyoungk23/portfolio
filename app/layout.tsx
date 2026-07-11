@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Juyoung Kim - Portfolio",
-  description: "Juyoung Kim's portfolio",
+  description:
+    "Product engineer in San Francisco building consumer AI, computer vision systems, and immersive XR.",
   icons: {
     icon: [{ url: "/logo.png", type: "image/png" }],
     shortcut: "/logo.png",
