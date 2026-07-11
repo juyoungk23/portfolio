@@ -1,21 +1,44 @@
 ---
-title: "Poppy: AI Assistant at Second Nature Computing"
-description: Founding iOS Engineer building a consumer AI-assistant app from 0 to 1.
+title: "Poppy: Building a Proactive AI Assistant"
+description: Founding iOS Engineer at Second Nature Computing, taking Poppy from pre-launch through its public debut.
 date: "2026-04-01"
 ---
 
-As the **Founding iOS Engineer** at **Second Nature Computing, Inc.** (April 2026 – Present), I'm building **Poppy**, a B2C AI-assistant app, from the ground up.
+I'm the **Founding iOS Engineer** at **Second Nature Computing** (April 2026 – present), where a four-person team builds **Poppy**, a proactive AI assistant for iOS. I joined about a month before launch; Poppy <a href="https://techcrunch.com/2026/05/13/poppy-debuts-a-proactive-ai-assistant-to-help-organize-your-digital-life/" target="_blank" rel="noopener noreferrer">debuted publicly in May 2026</a> and was covered by TechCrunch and 9to5Mac.
 
-## What I do
+## What Poppy is
 
-- **0 to 1 product ownership:** Architecting the native iOS app end-to-end, from the SwiftUI interface to the on-device and cloud AI plumbing that powers the assistant.
-- **AI-first experiences:** Designing conversational and assistive flows that make a large-language-model-backed assistant feel fast, reliable, and genuinely useful in everyday consumer scenarios.
-- **Foundational engineering:** Standing up the app's core infrastructure (state management, sync, networking, and observability) so the product can scale as the team and feature set grow.
+Most assistants wait to be asked. Poppy connects the accounts you already live in, then figures out what matters right now, before you ask. If you have a 30-minute gap in your calendar and you're near a park, it suggests a walk. If a friend mentioned their food preferences over text, it remembers that when you're picking a brunch spot. It tracks your flights, reminds you about medication, and folds it all into one feed instead of twelve apps.
 
-## Why it matters
+At launch, Poppy integrates with Apple and Google Calendar, Gmail, Outlook, iCloud Mail, Apple Health, Reminders, Contacts, iMessage, and WhatsApp, plus actions through apps like Uber and Instacart. That breadth is the product: the assistant is only as useful as the context it can see. It's also the responsibility. User data is encrypted at rest, and cloud LLM calls run under a zero-retention policy.
 
-Poppy is a chance to define a consumer AI product at its earliest stage. As the founding engineer, I'm responsible for the technical foundation the whole app is built on: the architecture decisions, the developer velocity, and the bar for quality and polish that a B2C audience expects.
+Second Nature is backed by $1.25M in pre-seed funding led by Kindred Ventures, with angels including DeepMind's Logan Kilpatrick. The founder, Sai Kambampati, came from Humane, so the company's DNA is ambient computing: software that acts on your behalf rather than waiting for a prompt.
 
-## Tech Stack
+## What I work on
+
+{/* TODO(juyoung): Replace each bullet below with the real story — specific features you shipped, launch-week work, metrics, architecture decisions you own. These are placeholders. */}
+
+- **The iOS app.** {/* TODO: what parts of the app you own end-to-end — surfaces, flows, launch features */} Core surfaces of the native SwiftUI app, from the proactive feed to the flows behind it.
+- **The context pipeline.** {/* TODO: which integrations/signals you built, how ingestion and sync work */} The plumbing that turns raw signals from connected accounts into context the assistant can act on.
+- **Launch and iteration.** {/* TODO: your role in the May 2026 launch, what changed post-launch based on real users */} Shipping through a public debut on a four-person team, then iterating on what real users actually did.
+
+{/* TODO(juyoung): Add a "hard problem" section here — one concrete technical story (like the TAPE post) is worth more than any list of responsibilities. */}
+
+## Why this problem
+
+Proactive assistance is the part of the assistant dream that chat interfaces skipped. Getting it right means solving real engineering problems: fusing noisy signals from a dozen sources, deciding when a suggestion is helpful versus creepy, and doing it all under privacy constraints that rule out the lazy solutions. As the founding engineer, the architecture decisions, the developer velocity, and the quality bar for a consumer audience are mine to get right.
+
+## Tech stack
 
 Swift, SwiftUI, iOS, large language models, REST/streaming APIs.
+
+<div className="not-prose mt-6">
+  <a
+    href="https://apps.apple.com/us/app/poppy-simplify-your-life/id6751168744"
+    className="inline-flex items-center rounded-md bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Get Poppy on the App Store →
+  </a>
+</div>

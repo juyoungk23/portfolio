@@ -4,15 +4,15 @@ description: A drop-in binary framework enabling synchronous, spatial video expe
 date: "2025-11-20"
 ---
 
-While building [Vantage Sports](/posts/vantage-vr-sports-platform), I encountered a critical friction point in the Apple Vision Pro ecosystem: **VR is isolating.** Watching sports is inherently social, but to do it in VR required building a synchronized, low-latency playback engine with spatial voice chat. It was a pretty immense engineering hurdle.
+While building [Vantage Sports](/posts/vantage-vr-sports-platform), I ran into the core problem of the Apple Vision Pro ecosystem: **VR is isolating.** Watching sports is social, but making it social in VR meant building a synchronized, low-latency playback engine with spatial voice chat, which turned out to be a serious engineering project in its own right.
 
-I extracted, refactored, and productized this infrastructure into the **Immersive Watch Party SDK**. It allows any visionOS developer to add "FaceTime Watch Together" functionality to their app with significantly fewer lines of code.
+So I extracted that infrastructure and productized it as the **Immersive Watch Party SDK**: any visionOS developer can now add "FaceTime Watch Together" to their app by binding an `AVPlayer` and defining a few UI roles.
 
 <Image src="/immersivewatchparty.jpg" width="1200" height="630" alt="High-level architecture of the SharePlay coordination flow" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nAG6AEX/AFIfJbNSWfN9h+VlZZ1NU09FTwAECUU3ORAQFQUJEABNLC9pNTfaaWbSV1SCUFo/N0AbFxn9vrAQEBQECQ8AaioxijIxtUc24F1FbysvMCcpOS8zyp2YbE9MBQYNAJRYZ/aFiv+Njf+DhrBwelpDQvK5qv/Er//pyxIQEgD/zdjUqbm7l6qchJWql6o9MztVPkhVQU2+ioAXFBcAlIKShW1+h3B/gG17w6y7IBsjAQUQFhYjExEbDAwSVnNFmN7jRt4AAAAASUVORK5CYII=" />
 
 ## The Engineering Challenge
 
-Apple's `GroupActivities` framework provides the bricks, but it doesn't handle building the whole house of an immersive application. I had to solve three distinct problems:
+Apple's `GroupActivities` framework provides the bricks, not the house. I had to solve three distinct problems:
 
 1. **Frame-Perfect Sync:** Coordinating `AVPlayer` states across variable network latencies.
 2. **Spatial Context:** Positioning UI and avatars relative to a shared coordinate system that doesn't physically exist for all users.
@@ -49,7 +49,7 @@ I designed a Secure Message Layer within the SDK that mandates server-side verif
 
 <Image src="/avplakers.jpg" width="1200" height="630" alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
 
-This turns a trust-based client handshake into a Zero Trust architecture, essential for apps streaming licensed sports content. For the NBA, NFL, and other big sports leagues, this could be of great interest to them.
+This turns a trust-based client handshake into a zero-trust architecture, which is table stakes for anyone streaming licensed sports content, whether that's me or the NBA.
 
 
 
@@ -61,10 +61,10 @@ I implemented a custom `SystemCoordinatorManager` that observes the `GroupSessio
 
 ## The Product Impact
 
-I soon realized that this was a pretty huge feature... By packaging this as a reusable binary (`.xcframework`), I could:
-- Helping the community: Other devs can integrate this feature much more easily than building it from scratch.
-- Rapid Iteration: New features in Vantage Sports are now decoupled from the core networking logic.
-- Potential Licensing: The SDK is designed with a license-key activation flow, opening a B2B revenue stream for other media companies entering the spatial computing market.
+Packaging this as a reusable binary (`.xcframework`) paid off three ways:
+- **Community:** The feature is now available to any visionOS app, not just mine.
+- **Iteration speed:** New features in Vantage Sports are now decoupled from the core networking logic.
+- **Licensing:** The SDK ships with a license-key activation flow, opening a B2B path for media companies entering spatial computing.
 
 <Image src="/immersivewatchparty-github.png" width="1200" height="630" alt="Demo of two users syncing playback instantly" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA8klEQVR4nEXMMUvDUBSG4Yv/qeBPEMXJVVyUbi4i7qYdapG2OjhZhzYtVKzUm5BqkkItSiFZQhbN0gRF0010CXV5xRvQ4R0O5+ETlcoRO8Wiqnd5xWTywPDORhpDLlo6rbaubgHQ719zqJWxnRFPzxFRFLG5vcvKxhavLwnvaZrDW9ul3jjB93063R6zOFbpnS5BEPySHLruCM/zyLIMaZgkSaJq67pa/4OWZaFpGufNJqVSGcdx1HMgTR6n3j+sN04RYgkhBPt7B4zvx4RhiBzccFar8RbPcmiaFoXCMmur61Srx2pZGgbzecrX5wffiwU/r+Ha9B4QnXwAAAAASUVORK5CYII=" />
 
