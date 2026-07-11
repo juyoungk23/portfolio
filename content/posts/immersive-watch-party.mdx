@@ -49,13 +49,13 @@ I designed a Secure Message Layer within the SDK that mandates server-side verif
 
 <Image src="/avplakers.jpg" width="1200" height="630" alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
 
-This turns a trust-based client handshake into a zero-trust architecture, which is table stakes for anyone streaming licensed sports content, whether that's me or the NBA.
+This turns a trust-based client handshake into a zero-trust architecture. If you're streaming licensed sports content, whether you're me or the NBA, you need this.
 
 
 
 ### 3. Concurrency & State Management
 
-The SDK is built entirely on Swift 6 strict concurrency standards. I utilize `@MainActor` isolation for UI-bound state tracking (like active participants) while offloading heavy coordination tasks to detached `Task`s.
+The SDK is built entirely on Swift 6 strict concurrency standards. I use `@MainActor` isolation for UI-bound state tracking (like active participants) while offloading heavy coordination tasks to detached `Task`s.
 
 I implemented a custom `SystemCoordinatorManager` that observes the `GroupSession` state. It handles the "Cold Start" problem where a user might accept a FaceTime invitation before the app has fully launched, queueing the activity and fulfilling it once the Immersive Space is ready.
 
@@ -71,6 +71,6 @@ Packaging this as a reusable binary (`.xcframework`) paid off three ways:
 
 ## Try it yourself!
 
-If you're an immersive video app developer and you'd like to integrate this cutting-edge feature, check out the repo here:
+If you're building an immersive video app and want watch parties in it, check out the repo here:
 
 [Vantage-Kit ImmersiveWatchPartySDK GitHub Repo](https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK)

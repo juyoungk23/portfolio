@@ -18,7 +18,7 @@ Most 3D capture tools require LiDAR or 50+ images. Using Apple's open-source <a 
 />
 ## Built for Sharing
 
-I could have generated and stored the splats locally on-device, but the whole point was the moment someone "revives" a photo and immediately wants to show it to someone. So I designed around **distribution** and **retention** from the start.
+I could have generated and stored the splats locally on-device, but the whole point is the moment you "revive" a photo and immediately want to show somebody. So I designed around **distribution** and **retention** from the start.
 
 ### 1. Virality via App Clips
 
@@ -45,7 +45,7 @@ Gaussian splats are large files (~60MB), and my Cloudflare R2 bucket is on the f
 
 ## Architecture: The "Free Tier" Stack
 
-One of my primary constraints was cost. Storing gigabytes of PLY (point cloud) files is expensive. I engineered a hybrid storage solution that leverages the best free tiers of different providers.
+My main constraint was cost. Storing gigabytes of PLY (point cloud) files is expensive, so I stitched together a hybrid storage setup from the best free tiers of different providers.
 
 ### The Event-Driven Pipeline
 
@@ -89,4 +89,4 @@ You can also <a href="https://apps.apple.com/us/app/sharp-memories/id6757504998"
   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/AO/w8ODf3uvc2fv5+dDJv9XQxNXLwcTCsm2ombLX+AD29/h4aVx+NyXu39x9XzeyrY6XiGqpoJM5MzLKysoA/f7+j5mgi5Sf8/Dsk206lo53k4FyhoRzPTwyxsbKAPz+/4uUmn6VoO/w8HhWL2JDK3xdQnNaNDs0JcvMzgD6+/uEenGblIfy8O5NKwk7GgAqCwASAAAJAQDQ0dEA/v38u3t4woSD8fDwUFNUPkFFQkdJQUNGS0xN4+PjE+1oZ4GzA/oAAAAASUVORK5CYII="
 />
 
-This project was a lot of fun to make, especially because I could view it from both my phone, laptop, and even the Vision Pro. Plus, I could share it with people!
+This project was a lot of fun to make, especially because I could view it on my phone, my laptop, and even the Vision Pro. Plus, I could share it with people!
