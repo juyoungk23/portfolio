@@ -86,7 +86,7 @@ const PROJECTS: Entry[] = [
     subtitle: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
-      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users and recurring monthly revenue (StoreKit In-App Purchases, Postgres backend). Broadcast partnerships with Fight Night San Jose and Dirty Boxing.",
+      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users and recurring monthly revenue (StoreKit In-App Purchases, Postgres backend). Broadcast partnerships with Mixed Martial Arts promotions across the United States (Bay Area, SoCal, Texas).",
       "Engineered a low-latency stereoscopic video player (SwiftUI, AVFoundation, RealityKit) and a SharePlay synchronization engine built on Swift 6 concurrency; extracted and open-sourced as the ImmersiveWatchParty SDK.",
     ],
   },
