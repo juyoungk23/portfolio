@@ -29,84 +29,17 @@ I like working at both ends of the stack: the backend systems that have to be ri
 
 My favorite projects need both creative prototyping and systems engineering: a sync engine that makes watching a fight with a friend in VR feel effortless, or a data pipeline honest enough that a coach trusts its numbers. First it has to work. Then it should feel like magic.
 
-## Connect
-
-- GitHub - <a href="https://github.com/juyoungk23" target="_blank" rel="noopener noreferrer">github.com/juyoungk23</a>
-- LinkedIn - <a href="https://www.linkedin.com/in/juyoungkim1/" target="_blank" rel="noopener noreferrer">linkedin.com/in/juyoungkim1</a>
-- Email - <a href="mailto:juyoungk23@gmail.com" target="_blank" rel="noopener noreferrer">juyoungk23@gmail.com</a>
-
-<div className="not-prose mt-6">
+<div className="not-prose mt-8 flex flex-wrap gap-3">
   <a
-    href="/Juyoung-Kim-Resume.pdf"
+    href="/resume"
     className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
-    target="_blank"
-    rel="noopener noreferrer"
-    download
   >
-    Download Resume
+    View Resume →
+  </a>
+  <a
+    href="/contact"
+    className="inline-flex items-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium hover:border-slate-500 dark:border-slate-700 dark:hover:border-slate-500"
+  >
+    Get in touch
   </a>
 </div>
-
-## Certifications
-
-- Google Cloud Associate Cloud Engineer
-- Google Cloud Professional Cloud Architect
-
-## Education
-
-- B.S. Computer Science, University of North Carolina at Chapel Hill (May 2023)
-
----
-
-## Resume
-
-U.S. Citizen in San Francisco, CA
-
-### Skills
-
-**Languages:** Swift (Advanced), Python, TypeScript, SQL. **Core Stack:** SwiftUI, React, Next.js, Supabase (Postgres), GCP, Modal. **AI/ML:** PyTorch, computer vision (pose estimation, tracking), CatBoost, LLM integration (Claude, Gemini). **Specialized:** App Clips, RealityKit, AR & VR, 3D Gaussian Splatting, Event-Driven Architecture.
-
-### Work Experience
-
-**Second Nature Computing (Poppy) | Founding iOS Engineer, San Francisco, CA** (April 2026 – Present)
-
-- Founding engineer on the four-person team behind [Poppy](/posts/poppy-second-nature), a proactive AI assistant (iOS, macOS, watchOS) that connects calendar, email, messages, and health data and surfaces what matters before users ask. Joined pre-launch; shipped the May 2026 public debut covered by TechCrunch and 9to5Mac. Backed by Kindred Ventures.
-- Own the native SwiftUI app end-to-end. {/* TODO(juyoung): the specific surfaces/systems you built (proactive feed, integrations, sync, notifications), plus one metric-backed bullet: launch outcome, retention, crash-free rate, or a hard technical win */}
-
-**Wells Fargo | Software Engineer, Backend Infrastructure, CA** (July 2023 – April 2026)
-
-- Designed and ran a high-throughput migration pipeline (NoSQL to SQL) from critical legacy systems to Google Cloud with zero data loss and 100% data integrity validation.
-- Refactored Python ETL scripts to cut data processing latency by 60% for internal reporting dashboards.
-- Led monthly production deployments, coordinating code integration across multiple teams and enforcing SDLC standards.
-
-**Wells Fargo | Software Engineering Intern, NC** (June 2022 – August 2022)
-
-- Won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.
-
-**Freelance Software Engineer | iOS & Web** (project-based)
-
-- Client work spanning native iOS health-and-fitness apps, AR iOS experiences that augment seashore environments, and websites for construction companies. {/* TODO(juyoung): name 1–2 of the strongest projects with an outcome each */}
-
-### Technical Projects
-
-**[TAPE](/posts/tape-mma-fight-intelligence) | Solo Builder, Fight Analytics from Broadcast Video (Python, PyTorch, Next.js)**
-
-- Built an end-to-end computer-vision system that turns single-camera MMA broadcast footage into verified fight analytics: identity tracking, pose extraction (YOLO pose + Meta Sapiens on Modal H100s), a physics-feature strike detector tuned to 90–98% recall, and a CatBoost classifier validated with nested leave-one-fight-out cross-validation.
-- Designed a human-in-the-loop review tool (single-keystroke verdicts, ~7–8/min) and a stats engine that publishes only human-verified events with confidence intervals; a build-time lint gate blocks any UI component from rendering a number that didn't come from the verified data layer.
-- Shipped a live Next.js/Supabase site with per-fighter reports and scout sheets for 22 fighters (~1,250 hand-logged strikes), plus an LLM analyst (Claude API) that routes questions to a closed registry of verified queries instead of computing answers itself.
-
-**[SHARP Memories](/posts/sharp-memories) | Creator (iOS, Web, visionOS)**
-
-- Built a cross-platform 3D capture app (Next.js, Python, Swift) that converts a single 2D photo into a Gaussian Splat, with an event-driven pipeline (Supabase Webhooks) triggering asynchronous serverless GPU inference on Modal. Live on the web and the App Store.
-- Built an iOS App Clip (< 15MB) so recipients can view shared 3D memories straight from an iMessage link, no install or account required.
-- Kept hosting costs near zero with a hybrid storage layer (Supabase + Cloudflare R2, zero egress fees) and automated bucket cleanup via pg_cron.
-
-**[Vantage Sports](/posts/vantage-vr-sports-platform) | Founder & Lead Architect (SwiftUI, iOS, visionOS)**
-
-- Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users and recurring monthly revenue (StoreKit In-App Purchases, Postgres backend). Broadcast partnerships with Fight Night San Jose and Dirty Boxing.
-- Engineered a low-latency stereoscopic video player (SwiftUI, AVFoundation, RealityKit) and a SharePlay synchronization engine built on Swift 6 concurrency; extracted and open-sourced as the [ImmersiveWatchParty SDK](https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK).
-
-### Education & Certificates
-
-- B.S. in Computer Science, UNC Chapel Hill (2023)
-- Google Cloud Professional Cloud Architect | Google Cloud Associate Cloud Engineer
