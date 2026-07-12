@@ -6,18 +6,8 @@ export const metadata = {
     "Resume of Juyoung Kim: product engineer in San Francisco building consumer AI, computer vision systems, and immersive XR.",
 }
 
-const SKILLS = [
-  { label: "Languages", items: "Swift (Advanced), Python, TypeScript, SQL" },
-  { label: "Core Stack", items: "SwiftUI, React, Next.js, Supabase (Postgres), GCP, Modal" },
-  {
-    label: "AI/ML",
-    items: "PyTorch, computer vision (pose estimation, tracking), CatBoost, LLM integration (Claude, Gemini)",
-  },
-  {
-    label: "Specialized",
-    items: "App Clips, RealityKit, AR & VR, 3D Gaussian Splatting, Event-Driven Architecture",
-  },
-]
+const SKILLS =
+  "Swift/SwiftUI, Python, TypeScript, SQL · React, Next.js, Supabase (Postgres), GCP, Modal · PyTorch, computer vision, LLM integration (Claude, Gemini) · RealityKit, AR/VR, 3D Gaussian Splatting"
 
 type Entry = {
   title: string
@@ -189,14 +179,7 @@ export default function ResumePage() {
       </div>
 
       <SectionHeading>Skills</SectionHeading>
-      <dl className="mt-4 space-y-1.5 text-sm leading-relaxed">
-        {SKILLS.map((s) => (
-          <div key={s.label} className="flex flex-col sm:flex-row sm:gap-2">
-            <dt className="shrink-0 font-semibold sm:w-28">{s.label}</dt>
-            <dd className="text-slate-600 dark:text-slate-300">{s.items}</dd>
-          </div>
-        ))}
-      </dl>
+      <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{SKILLS}</p>
 
       <SectionHeading>Work Experience</SectionHeading>
       {EXPERIENCE.map((e) => (
