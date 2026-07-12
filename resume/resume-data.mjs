@@ -34,10 +34,10 @@ export const experience = [
     href: "/posts/poppy-second-nature",
     bullets: [
       "Founding engineer on the four-person team behind Poppy, a proactive AI assistant (iOS, macOS, watchOS) that connects calendar, email, messages, and health data and surfaces what matters before users ask. Joined pre-launch; shipped the May 2026 public debut covered by TechCrunch and 9to5Mac. Backed by Kindred Ventures.",
-      // TODO(juyoung): replace the bullet below with the specific surfaces/systems you built
-      // (proactive feed, integrations, sync, notifications) plus one metric-backed bullet:
-      // launch outcome, retention, crash-free rate, or a hard technical win you own.
-      "Own the native SwiftUI app end-to-end.",
+      "Built Pods, Poppy's long-running agentic tasks: they cross-reference a user's email, calendar, and iMessage context and act in Google Sheets, Docs, Notion, and Calendar to handle goals like shepherding a visa application or keeping a running brag sheet current.",
+      "Extended Poppy across the Apple ecosystem: a watchOS app and macOS companion that hand off links between devices (the watch surfaces a Google Meet link at the right time and opens it on the Mac via PeerLink), plus two-way sync between Poppy's custom reminders and Apple Reminders.",
+      "Led a full UI redesign adopting iOS 26/27 Liquid Glass, and built an Oura Ring integration that explains a user's health scores with the life events behind them, which the Oura app alone cannot do.",
+      "Set up product analytics from zero (Mixpanel, in-depth dashboards, weekly reports) and shipped a new onboarding animation sequence that analytics showed had high completion and retention.",
     ],
   },
   {

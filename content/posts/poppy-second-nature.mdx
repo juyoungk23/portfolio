@@ -14,15 +14,13 @@ At launch, Poppy integrates with Apple and Google Calendar, Gmail, Outlook, iClo
 
 Second Nature is backed by $1.25M in pre-seed funding led by Kindred Ventures, with angels including DeepMind's Logan Kilpatrick. The founder, Sai Kambampati, came from Humane and approaches the problem from ambient computing: software that acts on your behalf instead of waiting for a prompt.
 
-## What I work on
+## What I've built
 
-{/* TODO(juyoung): Replace each bullet below with the real story — specific features you shipped, launch-week work, metrics, architecture decisions you own. These are placeholders. */}
-
-- **The iOS app.** {/* TODO: what parts of the app you own end-to-end — surfaces, flows, launch features */} Core surfaces of the native SwiftUI app, including the proactive feed.
-- **The context pipeline.** {/* TODO: which integrations/signals you built, how ingestion and sync work */} The plumbing that gets raw signals from connected accounts into a shape the assistant can act on.
-- **Launch and iteration.** {/* TODO: your role in the May 2026 launch, what changed post-launch based on real users */} Shipping through a public debut on a tiny team, then iterating on what users do with it.
-
-{/* TODO(juyoung): Add a "hard problem" section here — one concrete technical story (like the TAPE post) is worth more than any list of responsibilities. */}
+- **Pods.** Long-running agentic tasks that handle a goal over days or weeks, not a single prompt. A Pod cross-references your email, calendar, and iMessages for context, then acts in the tools you already use: Google Sheets and Docs, Notion, Calendar. The same machinery can track a visa application (what's the status, who to chase, who's waiting on a reply from you), shepherd wedding planning, or quietly keep a brag sheet of your work current.
+- **The Apple ecosystem.** A watchOS app and a macOS companion that work together: the watch surfaces your Google Meet link right before the meeting, and if your Mac is open, a suggestion appears and one tap opens it there via PeerLink. Deep links flow from phone to desktop the same way. Poppy's custom reminders also stay two-way synced with Apple Reminders, so nothing lives in two places.
+- **Health context.** An Oura Ring integration that does the thing Oura alone can't: explain why your scores moved, by connecting them to what was actually happening in your life that week.
+- **The redesign.** A ground-up UI pass adopting Liquid Glass across iOS 26 and 27.
+- **Measurement.** Product analytics from zero: Mixpanel, in-depth dashboards, weekly reports. The first big payoff was the new onboarding animation sequence, where the numbers showed high completion and retention.
 
 ## Why this problem
 
@@ -30,7 +28,7 @@ Proactive assistance is the part of the assistant dream that chat interfaces ski
 
 ## Tech stack
 
-Swift, SwiftUI, iOS, large language models, REST/streaming APIs.
+Swift, SwiftUI, iOS, macOS, watchOS, large language models, Mixpanel, REST/streaming APIs.
 
 <div className="not-prose mt-6">
   <a
