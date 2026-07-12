@@ -1,0 +1,56 @@
+\documentclass[10pt,letterpaper]{article}
+
+% Layout template for the resume. Edit fonts/margins/spacing here.
+% Content is injected from resume-data.mjs by generate-tex.mjs — do not write content here.
+\usepackage[margin=0.65in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+\definecolor{accentcolor}{RGB}{15,23,42} % slate-900, matching juyoungkim.net
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accentcolor,
+    urlcolor=accentcolor,
+    pdfborder={0 0 0}
+}
+
+\pagestyle{empty}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries\color{accentcolor}}
+  {}
+  {0em}
+  {}
+  [\vspace{0.1em}{\color{accentcolor}\titlerule}]
+\titlespacing{\section}{0pt}{7pt}{4pt}
+
+\setlist[itemize]{leftmargin=*, noitemsep, topsep=0pt, partopsep=0pt, parsep=2pt}
+
+\newcommand{\name}[1]{
+  \begin{center}
+    {\huge\bfseries #1}
+  \end{center}
+  \vspace{-1pt}
+}
+
+\newcommand{\jobheader}[4]{
+  \textbf{#1} \hfill #2 \\
+  \textit{#3} \hfill \textit{#4}
+  \vspace{-5pt}
+}
+
+\newcommand{\projectheader}[2]{
+  \textbf{#1} $|$ \textit{#2}
+  \vspace{-5pt}
+}
+
+\begin{document}
+
+%%BODY%%
+
+\end{document}

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { header, skills, experience, projects, education } from "@/resume/resume-data.mjs"
 
 export const metadata = {
   title: "Resume - Juyoung Kim",
@@ -6,83 +7,56 @@ export const metadata = {
     "Resume of Juyoung Kim: product engineer in San Francisco building consumer AI, computer vision systems, and immersive XR.",
 }
 
-const SKILLS =
-  "Swift/SwiftUI, Python, TypeScript, SQL · React, Next.js, Supabase (Postgres), GCP, Modal · PyTorch, computer vision, LLM integration (Claude, Gemini) · RealityKit, AR/VR, 3D Gaussian Splatting"
-
-type Entry = {
-  title: string
-  subtitle?: string
-  when?: string
+type ExperienceEntry = {
+  role: string
+  org: string
+  location: string
+  when: string
   href?: string
+  orgFirst?: boolean
   bullets: string[]
+  links?: Record<string, string>
 }
 
-const EXPERIENCE: Entry[] = [
-  {
-    title: "Second Nature Computing (Poppy) | Founding iOS Engineer",
-    subtitle: "San Francisco, CA",
-    when: "April 2026 – Present",
-    href: "/posts/poppy-second-nature",
-    bullets: [
-      "Founding engineer on the four-person team behind Poppy, a proactive AI assistant (iOS, macOS, watchOS) that connects calendar, email, messages, and health data and surfaces what matters before users ask. Joined pre-launch; shipped the May 2026 public debut covered by TechCrunch and 9to5Mac. Backed by Kindred Ventures.",
-      // TODO(juyoung): replace with the specific surfaces/systems you built (proactive feed,
-      // integrations, sync, notifications) plus one metric-backed bullet: launch outcome,
-      // retention, crash-free rate, or a hard technical win you own.
-      "Own the native SwiftUI app end-to-end.",
-    ],
-  },
-  {
-    title: "Wells Fargo | Software Engineer, Backend Infrastructure",
-    subtitle: "San Francisco, CA",
-    when: "July 2023 – April 2026",
-    href: "/posts/wells-fargo-data-engineering",
-    bullets: [
-      "Designed and ran a high-throughput migration pipeline (NoSQL to SQL) from critical legacy systems to Google Cloud with zero data loss, and refactored Python ETL scripts to cut processing latency by 60%.",
-      "Led monthly production deployments, coordinating code integration across multiple teams and enforcing SDLC standards.",
-      "Previously interned (Summer 2022): won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.",
-    ],
-  },
-  {
-    title: "Freelance Software Engineer | iOS & Web",
-    when: "Project-based",
-    bullets: [
-      // TODO(juyoung): name 1–2 of the strongest freelance projects with an outcome each.
-      "Client work spanning native iOS health-and-fitness apps, AR iOS experiences that augment seashore environments, and websites for construction companies.",
-    ],
-  },
-]
+type ProjectEntry = {
+  name: string
+  role: string
+  blurb?: string
+  stack: string
+  href?: string
+  bullets: string[]
+  links?: Record<string, string>
+}
 
-const PROJECTS: Entry[] = [
-  {
-    title: "TAPE | Creator",
-    subtitle: "Fight analytics from broadcast video (Python, PyTorch, Next.js)",
-    href: "/posts/tape-mma-fight-intelligence",
-    bullets: [
-      "Built an end-to-end computer-vision system that turns single-camera MMA broadcasts into verified fight analytics: high-recall strike detection, human-in-the-loop verification, and a live site with per-fighter reports for 22 fighters (~1,250 hand-logged strikes).",
-    ],
-  },
-  {
-    title: "SHARP Memories | Creator",
-    subtitle: "iOS, Web, visionOS",
-    href: "/posts/sharp-memories",
-    bullets: [
-      "Built a cross-platform app that converts a single 2D photo into a 3D Gaussian Splat via an event-driven serverless GPU pipeline; an iOS App Clip (< 15MB) lets recipients view shared memories from an iMessage link with no install. Live on the web and the App Store.",
-    ],
-  },
-  {
-    title: "Vantage Sports | Creator",
-    subtitle: "SwiftUI, iOS, visionOS",
-    href: "/posts/vantage-vr-sports-platform",
-    bullets: [
-      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users, recurring monthly revenue, and broadcast partnerships with Mixed Martial Arts promotions across the United States; extracted the SharePlay synchronization engine into the open-source ImmersiveWatchParty SDK.",
-    ],
-  },
-]
+const EXPERIENCE = experience as ExperienceEntry[]
+const PROJECTS = projects as ProjectEntry[]
 
-const EDUCATION = [
-  "B.S. in Computer Science, UNC Chapel Hill (2023)",
-  "Google Cloud Professional Cloud Architect | Google Cloud Associate Cloud Engineer",
-]
+function linkify(text: string, links?: Record<string, string>) {
+  if (!links) return text
+  let parts: (string | { phrase: string; url: string })[] = [text]
+  for (const [phrase, url] of Object.entries(links)) {
+    parts = parts.flatMap((p) =>
+      typeof p !== "string" || !p.includes(phrase)
+        ? [p]
+        : p.split(phrase).flatMap((seg, i) => (i === 0 ? [seg] : [{ phrase, url }, seg])),
+    )
+  }
+  return parts.map((p, i) =>
+    typeof p === "string" ? (
+      p
+    ) : (
+      <a
+        key={i}
+        href={p.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline decoration-slate-300 underline-offset-2 hover:decoration-slate-500 dark:decoration-slate-600"
+      >
+        {p.phrase}
+      </a>
+    ),
+  )
+}
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -92,29 +66,41 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   )
 }
 
-function EntryBlock({ entry }: { entry: Entry }) {
+function EntryBlock({
+  title,
+  subtitle,
+  when,
+  href,
+  bullets,
+  links,
+}: {
+  title: string
+  subtitle?: string
+  when?: string
+  href?: string
+  bullets: string[]
+  links?: Record<string, string>
+}) {
   return (
     <div className="mt-6">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
         <h3 className="text-[15px] font-semibold leading-snug">
-          {entry.href ? (
-            <Link href={entry.href} className="hover:underline">
-              {entry.title}
+          {href ? (
+            <Link href={href} className="hover:underline">
+              {title}
             </Link>
           ) : (
-            entry.title
+            title
           )}
         </h3>
-        {entry.when && (
-          <div className="font-mono text-xs text-slate-500 dark:text-slate-400">{entry.when}</div>
-        )}
+        {when && <div className="font-mono text-xs text-slate-500 dark:text-slate-400">{when}</div>}
       </div>
-      {entry.subtitle && (
-        <div className="mt-0.5 text-[13px] text-slate-500 dark:text-slate-400">{entry.subtitle}</div>
+      {subtitle && (
+        <div className="mt-0.5 text-[13px] text-slate-500 dark:text-slate-400">{subtitle}</div>
       )}
       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        {entry.bullets.map((b) => (
-          <li key={b}>{b}</li>
+        {bullets.map((b, i) => (
+          <li key={i}>{linkify(b, links)}</li>
         ))}
       </ul>
     </div>
@@ -122,34 +108,29 @@ function EntryBlock({ entry }: { entry: Entry }) {
 }
 
 export default function ResumePage() {
+  const educationLines = [
+    `${education.degree.title}, ${education.degree.org} (${education.degree.year})`,
+    education.certs.join(" | "),
+  ]
+
   return (
     <div className="py-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Juyoung Kim</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{header.name}</h1>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-            Software / Product Engineer · San Francisco, CA · U.S. Citizen
+            {header.tagline} · {header.location} · {header.citizenship}
           </p>
           <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-            <a href="mailto:juyoungk23@gmail.com" className="hover:underline">
-              juyoungk23@gmail.com
+            <a href={`mailto:${header.email}`} className="hover:underline">
+              {header.email}
             </a>{" "}
             ·{" "}
-            <a
-              href="https://github.com/juyoungk23"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
+            <a href={header.github.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
               GitHub
             </a>{" "}
             ·{" "}
-            <a
-              href="https://www.linkedin.com/in/juyoungkim1/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
+            <a href={header.linkedin.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
               LinkedIn
             </a>
           </p>
@@ -166,21 +147,36 @@ export default function ResumePage() {
       </div>
 
       <SectionHeading>Skills</SectionHeading>
-      <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{SKILLS}</p>
+      <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{skills}</p>
 
       <SectionHeading>Work Experience</SectionHeading>
       {EXPERIENCE.map((e) => (
-        <EntryBlock key={e.title} entry={e} />
+        <EntryBlock
+          key={e.role + e.org}
+          title={e.orgFirst === false ? `${e.role} | ${e.org}` : `${e.org} | ${e.role}`}
+          subtitle={e.location || undefined}
+          when={e.when}
+          href={e.href}
+          bullets={e.bullets}
+          links={e.links}
+        />
       ))}
 
       <SectionHeading>Technical Projects</SectionHeading>
       {PROJECTS.map((p) => (
-        <EntryBlock key={p.title} entry={p} />
+        <EntryBlock
+          key={p.name}
+          title={`${p.name} | ${p.role}`}
+          subtitle={p.blurb ? `${p.blurb} (${p.stack})` : p.stack}
+          href={p.href}
+          bullets={p.bullets}
+          links={p.links}
+        />
       ))}
 
       <SectionHeading>Education &amp; Certificates</SectionHeading>
       <ul className="mt-4 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-        {EDUCATION.map((e) => (
+        {educationLines.map((e) => (
           <li key={e}>{e}</li>
         ))}
       </ul>

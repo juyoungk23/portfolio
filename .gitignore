@@ -34,3 +34,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .contentlayerresume/*.pdf
+resume/juyoung-kim-resume.tex

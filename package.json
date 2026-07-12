@@ -7,7 +7,8 @@
     "build": "next build",
     "preview": "next build && next start",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "resume:pdf": "node resume/generate-tex.mjs && tectonic resume/juyoung-kim-resume.tex && cp resume/juyoung-kim-resume.pdf public/Juyoung-Kim-Resume.pdf"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
