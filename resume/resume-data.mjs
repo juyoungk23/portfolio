@@ -52,17 +52,6 @@ export const experience = [
       "Previously interned (Summer 2022): won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.",
     ],
   },
-  {
-    role: "Freelance Software Engineer",
-    org: "iOS & Web",
-    location: "",
-    when: "Project-based",
-    orgFirst: false,
-    bullets: [
-      // TODO(juyoung): name 1–2 of the strongest freelance projects with an outcome each.
-      "Client work spanning native iOS health-and-fitness apps, AR iOS experiences that augment seashore environments, and websites for construction companies.",
-    ],
-  },
 ]
 
 /**
