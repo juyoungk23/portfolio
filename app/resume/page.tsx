@@ -72,7 +72,7 @@ const EXPERIENCE: Entry[] = [
 
 const PROJECTS: Entry[] = [
   {
-    title: "TAPE | Solo Builder",
+    title: "TAPE | Creator",
     subtitle: "Fight analytics from broadcast video (Python, PyTorch, Next.js)",
     href: "/posts/tape-mma-fight-intelligence",
     bullets: [
@@ -92,7 +92,7 @@ const PROJECTS: Entry[] = [
     ],
   },
   {
-    title: "Vantage Sports | Founder & Lead Architect",
+    title: "Vantage Sports | Creator",
     subtitle: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
