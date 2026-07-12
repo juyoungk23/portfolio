@@ -1,12 +1,12 @@
 ---
 title: "TAPE: What I Learned Turning Fight Broadcasts into Numbers a Coach Can Trust"
-description: (ML, Computer Vision) A solo-built system that turns ordinary MMA broadcast footage into verified, coach-ready fight analytics. Here's the product, the stack, and the lessons that cost me real money and sleep.
+description: (ML, Computer Vision) A system that turns ordinary MMA broadcast footage into verified, coach-ready fight analytics. Here's the product, the stack, and the lessons that cost me real money and sleep.
 date: "2026-07-09"
 ---
 
 **TAPE** watches MMA fights the way an analyst would, from a single ordinary broadcast video, and turns them into numbers a coach can trust: what a fighter throws, what he goes to after the jab, how his output changes round by round. Every number links back to timestamps on the tape. When the data can't support an answer, the site says so instead of guessing.
 
-I built it alone: the computer vision pipeline, the training and evaluation harness, the labeling tool, and the product site. This post is the honest version of what that took.
+This post is the honest version of what it took to build: the computer vision pipeline, the training and evaluation harness, the labeling tool, and the product site.
 
 <Image src="/tape/home.png" alt="TAPE home page: fighter intelligence built from verified tape" width={1440} height={1364} className="rounded-lg border border-slate-200 dark:border-slate-800" />
 
@@ -37,6 +37,10 @@ Under the hood it's a five-stage pipeline:
 
 Identity figures out who is who. Pose extracts where every body part is. The detector flags anything that looks like a strike, deliberately over-firing (around 90 to 98 percent recall) so it misses almost nothing. The classifier cleans up that stream, and analytics computes tendencies with confidence intervals and sample sizes on everything. Every stage is allowed to say "I don't know" instead of guessing.
 
+<Image src="/tape/overlay.png" alt="The clip viewer with Overlay AI Intelligence on: per-fighter pose skeletons and tracker boxes drawn over the broadcast frame" width={904} height={900} className="rounded-lg border border-slate-200 dark:border-slate-800 mx-auto w-full max-w-md" />
+
+You can watch the pipeline see. Every clip in the product has an "Overlay AI Intelligence" toggle that draws the pose skeletons and tracker boxes over the broadcast frame, one color per fighter.
+
 A human sits in the middle on purpose. My review tool plays each flagged moment in a slow-motion loop and takes a verdict in a single keystroke, about 7 or 8 per minute. The published stats come only from what a human confirmed, and every one links back to its moments on tape.
 
 <Image src="/tape/labeler.png" alt="The review tool: one flagged moment at a time, judged with single keystrokes" width={1400} height={875} className="rounded-lg border border-slate-200 dark:border-slate-800" />
@@ -63,9 +67,9 @@ A human sits in the middle on purpose. My review tool plays each flagged moment 
 
 **Most of the site says "insufficient data," on purpose.** The pack behind the site has 724 stat cells, and 447 of them currently say "insufficient data" with the reason and what would unlock them. A coach who catches you bluffing once will never trust the sheet again, so refusals are designed as real states: a stat that needs more data shows a progress meter toward its pre-registered gate, and a thing the broadcast physically cannot support says so in a visually distinct way.
 
-**The claim leads, the proof sits one click down.** A coach wants the read: what does this guy do, what does it open. A skeptic wants sample sizes, confidence intervals, and provenance. So the page leads with the claim, keeps the evidence line (CI and n) always visible, and stages the full audit trail underneath, from timestamps down to the registered upload they index.
+**The claim leads, the proof sits one click down.** A coach wants the read: what does this guy do, what does it open. A skeptic wants sample sizes, confidence intervals, and provenance. So the page leads with the claim, keeps the evidence line (CI and n) always visible, and stages the full audit trail underneath, from timestamps down to the registered upload they index. Every stat opens a picture-in-picture viewer where its receipts play as a timestamped list of moments on the tape.
 
-<Image src="/tape/fightiq.png" alt="Fight IQ: the top conditional read charted with its confidence interval, above the full trigger matrix" width={1440} height={1030} className="rounded-lg border border-slate-200 dark:border-slate-800" />
+<Image src="/tape/pip.png" alt="The picture-in-picture clip viewer: a stat's receipts as a playlist of timestamped moments, each one playable" width={904} height={1520} className="rounded-lg border border-slate-200 dark:border-slate-800 mx-auto w-full max-w-md" />
 
 **No number reaches the screen without provenance.** The build fails if any stat-rendering component contains a digit character in its source, so every number on screen must arrive as a string from the verified data layer. A well-meaning UI edit can never invent, round, or "fix" a statistic. The AI analyst lives under the same rule: it never computes, it routes plain-English questions to a closed registry of verified queries and explains the results. If the data can't answer, it says why.
 
@@ -73,9 +77,11 @@ A human sits in the middle on purpose. My review tool plays each flagged moment 
 
 **Per-round precision would be dishonest.** Per-round counts sit on a Poisson floor of roughly plus or minus 20 percent, so the product speaks in trends and conditionals instead. Rates get honest denominators too: kick rates only count minutes where legs are actually visible, because about 18 percent of broadcast frames crop them out. And the site discloses that ground truth is one annotator's judgment, which misses an estimated 11 to 15 percent of strikes, so every count is a floor.
 
+<Image src="/tape/fightiq.png" alt="Fight IQ: the top conditional read charted with its confidence interval, above the full trigger matrix" width={1440} height={1030} className="rounded-lg border border-slate-200 dark:border-slate-800" />
+
 ## Where it stands
 
-Twenty-two fighters on file, about 1,250 hand-logged strikes and a few thousand adjudicated detector candidates, a live site with per-fighter reports and a printable scout sheet, and a contributor labeling flow that quietly measures reviewer accuracy against known answers before verdicts count. The single-camera constraint turned out to be the point: anyone can buy a multi-camera lab feed, but a system that gets trustworthy numbers out of the footage that actually exists for every fighter is worth building.
+Twenty-two fighters on file, about 1,250 hand-logged strikes and a few thousand adjudicated detector candidates, a live site with per-fighter reports and a printable scout sheet, and a contributor labeling flow that quietly measures reviewer accuracy against known answers before verdicts count. It has been a solo build so far, which is exactly why that contributor flow exists. The single-camera constraint turned out to be the point: anyone can buy a multi-camera lab feed, but a system that gets trustworthy numbers out of the footage that actually exists for every fighter is worth building.
 
 ## Tech stack
 
