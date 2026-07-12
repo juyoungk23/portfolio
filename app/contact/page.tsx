@@ -42,16 +42,6 @@ export default function ContactPage() {
       </p>
 
       <div className="mt-7 flex flex-wrap items-center gap-3">
-        <a
-          href={`mailto:${EMAIL}`}
-          className="inline-flex items-center gap-2 rounded-md bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
-        >
-          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.6">
-            <rect x="2.5" y="4.5" width="15" height="11" rx="1.5" />
-            <path d="M3 5.5l7 5.5 7-5.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Email me
-        </a>
         <CopyEmail email={EMAIL} />
         <span className="font-mono text-sm text-slate-500 dark:text-slate-400">{EMAIL}</span>
       </div>
