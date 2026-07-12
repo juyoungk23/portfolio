@@ -37,8 +37,8 @@ export default function ContactPage() {
       <h1 className="text-3xl font-bold tracking-tight">Get in touch</h1>
       <p className="mt-3 max-w-prose text-slate-600 dark:text-slate-400">
         I&apos;m a product engineer in San Francisco. I read everything sent my way and usually
-        reply within a day or two. If you&apos;d rather just talk, say so and I&apos;ll send a
-        calendar link.
+        reply within a day or two. If you&apos;d rather talk, I&apos;d be happy to send a
+        calendar invite!
       </p>
 
       <div className="mt-7 flex flex-wrap items-center gap-3">

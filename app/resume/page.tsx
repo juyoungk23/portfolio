@@ -33,21 +33,13 @@ const EXPERIENCE: Entry[] = [
   },
   {
     title: "Wells Fargo | Software Engineer, Backend Infrastructure",
-    subtitle: "CA",
+    subtitle: "San Francisco, CA",
     when: "July 2023 – April 2026",
     href: "/posts/wells-fargo-data-engineering",
     bullets: [
-      "Designed and ran a high-throughput migration pipeline (NoSQL to SQL) from critical legacy systems to Google Cloud with zero data loss and 100% data integrity validation.",
-      "Refactored Python ETL scripts to cut data processing latency by 60% for internal reporting dashboards.",
+      "Designed and ran a high-throughput migration pipeline (NoSQL to SQL) from critical legacy systems to Google Cloud with zero data loss, and refactored Python ETL scripts to cut processing latency by 60%.",
       "Led monthly production deployments, coordinating code integration across multiple teams and enforcing SDLC standards.",
-    ],
-  },
-  {
-    title: "Wells Fargo | Software Engineering Intern",
-    subtitle: "NC",
-    when: "June 2022 – August 2022",
-    bullets: [
-      "Won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.",
+      "Previously interned (Summer 2022): won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.",
     ],
   },
   {
@@ -66,9 +58,7 @@ const PROJECTS: Entry[] = [
     subtitle: "Fight analytics from broadcast video (Python, PyTorch, Next.js)",
     href: "/posts/tape-mma-fight-intelligence",
     bullets: [
-      "Built an end-to-end computer-vision system that turns single-camera MMA broadcast footage into verified fight analytics: identity tracking, pose extraction (YOLO pose + Meta Sapiens on Modal H100s), a physics-feature strike detector tuned to 90–98% recall, and a CatBoost classifier validated with nested leave-one-fight-out cross-validation.",
-      "Designed a human-in-the-loop review tool (single-keystroke verdicts, ~7–8/min) and a stats engine that publishes only human-verified events with confidence intervals; a build-time lint gate blocks any UI component from rendering a number that didn't come from the verified data layer.",
-      "Shipped a live Next.js/Supabase site with per-fighter reports and scout sheets for 22 fighters (~1,250 hand-logged strikes), plus an LLM analyst (Claude API) that routes questions to a closed registry of verified queries instead of computing answers itself.",
+      "Built an end-to-end computer-vision system that turns single-camera MMA broadcasts into verified fight analytics: high-recall strike detection, human-in-the-loop verification, and a live site with per-fighter reports for 22 fighters (~1,250 hand-logged strikes).",
     ],
   },
   {
@@ -76,9 +66,7 @@ const PROJECTS: Entry[] = [
     subtitle: "iOS, Web, visionOS",
     href: "/posts/sharp-memories",
     bullets: [
-      "Built a cross-platform 3D capture app (Next.js, Python, Swift) that converts a single 2D photo into a Gaussian Splat, with an event-driven pipeline (Supabase Webhooks) triggering asynchronous serverless GPU inference on Modal. Live on the web and the App Store.",
-      "Built an iOS App Clip (< 15MB) so recipients can view shared 3D memories straight from an iMessage link, no install or account required.",
-      "Kept hosting costs near zero with a hybrid storage layer (Supabase + Cloudflare R2, zero egress fees) and automated bucket cleanup via pg_cron.",
+      "Built a cross-platform app that converts a single 2D photo into a 3D Gaussian Splat via an event-driven serverless GPU pipeline; an iOS App Clip (< 15MB) lets recipients view shared memories from an iMessage link with no install. Live on the web and the App Store.",
     ],
   },
   {
@@ -86,8 +74,7 @@ const PROJECTS: Entry[] = [
     subtitle: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
-      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users and recurring monthly revenue (StoreKit In-App Purchases, Postgres backend). Broadcast partnerships with Mixed Martial Arts promotions across the United States (Bay Area, SoCal, Texas).",
-      "Engineered a low-latency stereoscopic video player (SwiftUI, AVFoundation, RealityKit) and a SharePlay synchronization engine built on Swift 6 concurrency; extracted and open-sourced as the ImmersiveWatchParty SDK.",
+      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users, recurring monthly revenue, and broadcast partnerships with Mixed Martial Arts promotions across the United States; extracted the SharePlay synchronization engine into the open-source ImmersiveWatchParty SDK.",
     ],
   },
 ]
