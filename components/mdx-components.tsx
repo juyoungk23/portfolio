@@ -72,9 +72,44 @@ function YouTube({ id, autoplay = false, muted = true, loop = false }: {
   )
 }
 
+// Self-hosted video (served from /public). Defaults to a muted, autoplaying,
+// looping clip that behaves like a high-quality GIF — ideal for UI/animation showcases.
+function Video({
+  src,
+  poster,
+  autoplay = true,
+  loop = true,
+  muted = true,
+  controls = false,
+  className,
+}: {
+  src: string
+  poster?: string
+  autoplay?: boolean
+  loop?: boolean
+  muted?: boolean
+  controls?: boolean
+  className?: string
+}) {
+  return (
+    <video
+      src={src}
+      poster={poster}
+      autoPlay={autoplay}
+      loop={loop}
+      muted={muted}
+      controls={controls}
+      playsInline
+      preload="metadata"
+      className={className ?? "my-6 w-full rounded-lg"}
+    />
+  )
+}
+
 const components = {
   Image: MdxImage,
   YouTube,
+  Video,
 }
 
 interface MdxProps {
