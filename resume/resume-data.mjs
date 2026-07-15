@@ -68,7 +68,7 @@ export const projects = [
     stack: "Python, PyTorch, Next.js",
     href: "/posts/tape-mma-fight-intelligence",
     bullets: [
-      "Built an end-to-end computer-vision system that turns single-camera MMA broadcasts into verified fight analytics: high-recall strike detection, human-in-the-loop verification, and a live site with per-fighter reports for 22 fighters (~1,250 hand-logged strikes).",
+      "Built an end-to-end computer-vision system that turns single-camera MMA broadcasts into verified fight analytics: high-recall strike detection with a human-in-the-loop verification workflow, and a live site with per-fighter reports across 22 fighters.",
     ],
   },
   {
