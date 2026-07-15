@@ -86,7 +86,7 @@ export const projects = [
     stack: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
-      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with active users, recurring monthly revenue, and broadcast partnerships with Mixed Martial Arts promotions across the United States; extracted the SharePlay synchronization engine into the open-source ImmersiveWatchParty SDK.",
+      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with an engaged user base and broadcast partnerships with Mixed Martial Arts promotions across the United States; extracted the SharePlay synchronization engine into the open-source ImmersiveWatchParty SDK.",
     ],
     links: {
       "ImmersiveWatchParty SDK": "https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK",
