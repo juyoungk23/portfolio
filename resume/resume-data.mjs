@@ -1,6 +1,6 @@
 // Single source of truth for the resume.
 // Consumed by app/resume/page.tsx (website) and resume/generate-tex.mjs (PDF).
-// Write plain text here: %, &, <, ~, en dashes are fine — the LaTeX generator escapes them.
+// Write plain text here: %, &, <, ~, en dashes are fine: the LaTeX generator escapes them.
 // Rebuild the PDF with: pnpm resume:pdf
 
 export const header = {
@@ -16,14 +16,14 @@ export const header = {
 }
 
 export const skills =
-  "Swift/SwiftUI, Python, TypeScript, SQL · React, Next.js, Supabase (Postgres), GCP, Modal · PyTorch, computer vision, LLM integration (Claude, Gemini) · RealityKit, AR/VR, 3D Gaussian Splatting"
+  "Swift/SwiftUI, Swift 6 concurrency, Python, TypeScript, SQL · React, Next.js, Supabase (Postgres), GCP · computer vision, LLM integration (Claude, Gemini) · RealityKit, AR/VR, 3D Gaussian Splatting"
 
 /**
  * Experience entry:
- *   role, org, location, when — header fields
- *   href — optional link to the matching blog post (website only)
- *   orgFirst: false — website title reads "role | org" instead of "org | role"
- *   links — optional map of { "phrase in a bullet": "url" }, linkified by both renderers
+ *   role, org, location, when: header fields
+ *   href: optional link to the matching blog post (website only)
+ *   orgFirst: false: website title reads "role | org" instead of "org | role"
+ *   links: optional map of { "phrase in a bullet": "url" }, linkified by both renderers
  */
 export const experience = [
   {
@@ -34,10 +34,11 @@ export const experience = [
     href: "/posts/poppy-second-nature",
     bullets: [
       "Founding engineer on the four-person team behind Poppy, a proactive AI assistant (iOS, macOS, watchOS) that connects calendar, email, messages, and health data and surfaces what matters before users ask. Joined pre-launch; shipped the May 2026 public debut covered by TechCrunch and 9to5Mac. Backed by Kindred Ventures.",
-      "Built Pods, Poppy's long-running agentic tasks: they cross-reference a user's email, calendar, and iMessage context and act in Google Sheets, Docs, Notion, and Calendar to handle goals like shepherding a visa application or keeping a running brag sheet current.",
-      "Extended Poppy across the Apple ecosystem: a watchOS app and macOS companion that hand off links between devices (the watch surfaces a Google Meet link at the right time and opens it on the Mac via PeerLink), plus two-way sync between Poppy's custom reminders and Apple Reminders.",
-      "Led a full UI redesign adopting iOS 26/27 Liquid Glass, and built an Oura Ring integration that explains a user's health scores with the life events behind them, which the Oura app alone cannot do.",
-      "Set up product analytics from zero (Mixpanel, in-depth dashboards, weekly reports) and shipped a new onboarding animation sequence that analytics showed had high completion and retention.",
+      "Co-built Pods, Poppy's long-running agentic tasks; own the pods backend day to day and the client that renders agent output (charts, chips, deep links) as native SwiftUI.",
+      "Extended Poppy across iOS, watchOS, and macOS with cross-device handoff: a suggestion on iPhone or Watch opens the meeting link on the Mac (WatchConnectivity relay into MultipeerConnectivity, with a durable deduplicating completion queue so offline watch actions never drop).",
+      "Built two-way sync between Poppy's reminder system and Apple Reminders via EventKit: silent no-alarm mirrors, deletion propagation, and single-source-of-truth arbitration so exactly one notification ever fires.",
+      "Built the health layer reconciling HealthKit and Oura Ring data (per-surface source-of-truth precedence, dedup across Apple Watch and ring) and shipped sleep briefings that explain scores with the life events behind them.",
+      "Set up product analytics from zero (Mixpanel, in-depth dashboards, weekly reports) and shipped a new onboarding animation sequence that analytics showed had ~60% end-to-end completion through OTP verification and a paywall; introduced the codebase's first test target (Swift Testing package, ~30 tests, pre-commit hooks).",
     ],
   },
   {
@@ -56,8 +57,8 @@ export const experience = [
 
 /**
  * Project entry:
- *   name, role — rendered as "name | role" (web) and "name (role)" (PDF)
- *   blurb — optional one-line description; stack — tech list
+ *   name, role: rendered as "name | role" (web) and "name (role)" (PDF)
+ *   blurb: optional one-line description; stack: tech list
  *   subtitle becomes "blurb (stack)" on web, "blurb -- stack" on PDF, or just stack if no blurb
  */
 export const projects = [
