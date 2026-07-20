@@ -4,7 +4,7 @@ description: (iOS, macOS, watchOS) Founding iOS Engineer at Second Nature Comput
 date: "2026-04-01"
 ---
 
-I'm the **Founding iOS Engineer** at **Second Nature Computing** (April 2026 – present), where four of us build **Poppy**, a proactive AI assistant for iOS. I joined about a month before launch; Poppy <a href="https://techcrunch.com/2026/05/13/poppy-debuts-a-proactive-ai-assistant-to-help-organize-your-digital-life/" target="_blank" rel="noopener noreferrer">debuted publicly in May 2026</a> and was covered by TechCrunch and 9to5Mac.
+I'm the **Founding iOS Engineer** at **Second Nature Computing** (April 2026 – present), where three of us build **Poppy**, a proactive AI assistant for iOS. I joined about a month before launch; Poppy <a href="https://techcrunch.com/2026/05/13/poppy-debuts-a-proactive-ai-assistant-to-help-organize-your-digital-life/" target="_blank" rel="noopener noreferrer">debuted publicly in May 2026</a> and was covered by TechCrunch and 9to5Mac.
 
 <Image src="/poppy/home.png" alt="getpoppy.app: the calmer way to use your phone, with proactive suggestion cards for a run, an Uber, a flight check-in, and a dinner reservation" width={1440} height={1080} className="rounded-lg border border-slate-200 dark:border-slate-800" />
 
@@ -18,11 +18,12 @@ Second Nature is backed by $1.25M in pre-seed funding led by Kindred Ventures, w
 
 ## What I've built
 
-- **Pods.** Long-running agentic tasks that handle a goal over days or weeks, not a single prompt. A Pod cross-references your email, calendar, and iMessages for context, then acts in the tools you already use: Google Sheets and Docs, Notion, Calendar. The same machinery can track a visa application (what's the status, who to chase, who's waiting on a reply from you), shepherd wedding planning, or quietly keep a brag sheet of your work current.
-- **The Apple ecosystem.** A watchOS app and a macOS companion that work together: the watch surfaces your Google Meet link right before the meeting, and if your Mac is open, a suggestion appears and one tap opens it there via PeerLink. Deep links flow from phone to desktop the same way. Poppy's custom reminders also stay two-way synced with Apple Reminders, so nothing lives in two places.
-- **Health context.** An Oura Ring integration that does the thing Oura alone can't: explain why your scores moved, by connecting them to what was actually happening in your life that week.
+- **Pods.** Co-built Poppy's long-running agentic tasks, which handle a goal over days or weeks, not a single prompt. I own the pods backend day to day and the client that renders agent output (charts, chips, deep links) as native SwiftUI.
+- **The Apple ecosystem.** I own Poppy's Apple-platform surface end to end (iOS, watchOS, macOS), including Mac Handoff: a suggestion surfaces on iPhone or Watch minutes before a meeting, and one tap opens the link on the Mac over MultipeerConnectivity, with the Watch path relayed through the phone via WatchConnectivity.
+- **Reminders.** Two-way sync between Poppy's reminder system and Apple Reminders, with our backend as the source of truth: silent no-alarm reminders mirror Poppy's reminders on Apple's side, edits and deletions made offline on either side reconcile on re-sync, and ownership logic decides which system fires the alarm, so it only ever fires once.
+- **Health context.** The health layer integrating HealthKit and Oura Ring data: logic that decides which source wins when Apple Watch and ring disagree, and sleep briefings that explain scores with the life context behind them.
 - **The redesign.** A ground-up UI pass adopting Liquid Glass across iOS 26 and 27.
-- **Measurement.** Product analytics from zero: Mixpanel, in-depth dashboards, weekly reports. The first big payoff was the new onboarding animation sequence, where the numbers showed high completion and retention.
+- **Measurement.** Product analytics from zero: Mixpanel, in-depth dashboards, weekly reports. The first big payoff was the new onboarding flow, converting ~60% end to end through OTP verification and a paywall.
 
 <figure className="not-prose my-8 flex flex-col items-center">
   <Video
