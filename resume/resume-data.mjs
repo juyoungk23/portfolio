@@ -15,8 +15,18 @@ export const header = {
   github: { label: "github.com/juyoungk23", url: "https://github.com/juyoungk23" },
 }
 
-export const skills =
-  "Swift/SwiftUI, Swift 6 concurrency, Python, TypeScript, SQL · React, Next.js, Supabase (Postgres), GCP · computer vision, LLM integration (Claude, Gemini) · RealityKit, AR/VR, 3D Gaussian Splatting"
+export const skills = [
+  {
+    label: "Apple platforms",
+    items:
+      "Swift 6 / SwiftUI, RealityKit, visionOS, EventKit, HealthKit, WatchConnectivity, MultipeerConnectivity, SharePlay, App Clips, Swift Testing",
+  },
+  {
+    label: "AI & backend",
+    items:
+      "LLM integration (Claude, Gemini), computer vision (PyTorch), 3D Gaussian Splatting, Python, GCP, Supabase (Postgres), Next.js",
+  },
+]
 
 /**
  * Experience entry:
@@ -33,12 +43,13 @@ export const experience = [
     when: "April 2026 – Present",
     href: "/posts/poppy-second-nature",
     bullets: [
-      "Founding engineer on the three-person team behind Poppy, a proactive AI assistant (iOS, macOS, watchOS) that connects calendar, email, messages, and health data and surfaces what matters before users ask. Joined pre-launch; shipped the May 2026 public debut covered by TechCrunch and 9to5Mac. Backed by Kindred Ventures.",
-      "Co-built Pods, Poppy's long-running agentic tasks; own the pods backend day to day and the client that renders agent output (charts, chips, deep links) as native SwiftUI.",
-      "Extended Poppy across iOS, watchOS, and macOS with cross-device handoff: a suggestion on iPhone or Watch opens the meeting link on the Mac (WatchConnectivity relay into MultipeerConnectivity).",
-      "Built two-way sync between Poppy's reminder system and Apple Reminders via EventKit, with Poppy's backend as the source of truth: reminders created in either app (or by the assistant) appear in both, offline edits and deletions reconcile on re-sync, and ownership logic ensures only one alarm ever fires.",
-      "Built the health layer integrating HealthKit and Oura Ring data, deduplicating overlapping Apple Watch and ring signals, and shipped sleep briefings that explain scores with the life events behind them.",
-      "Set up product analytics from zero (Mixpanel, in-depth dashboards, weekly reports) and shipped a new onboarding animation sequence that analytics showed had ~60% end-to-end completion through OTP verification and a paywall; introduced the codebase's first test target (Swift Testing package, ~30 tests, pre-commit hooks).",
+      "Third engineer on Poppy, a proactive AI assistant for iOS, macOS, and watchOS; joined pre-launch in April and shipped the May 2026 public debut (TechCrunch, 9to5Mac). Backed by Kindred Ventures.",
+      "Co-built Pods, Poppy's long-running agentic tasks that handle goals over days or weeks rather than a single prompt; own the Pods backend and the SwiftUI client that renders agent output as native charts, chips, and deep links.",
+      "Built cross-device handoff: a suggestion on iPhone or Watch opens the meeting link on the Mac, via a WatchConnectivity relay into MultipeerConnectivity.",
+      "Built two-way sync with Apple Reminders via EventKit, Poppy's backend as source of truth: offline edits and deletions reconcile on re-sync, and delivery-ownership logic guarantees exactly one alarm fires.",
+      "Built the health layer merging HealthKit and Oura Ring data (deduplicating overlapping Watch and ring signals) and shipped sleep briefings that explain scores using the user's life context.",
+      "Own product analytics end to end: built the Mixpanel pipeline from zero, dashboards, and weekly metrics reports; shipped a redesigned onboarding flow that reached ~60% completion through OTP verification and paywall.",
+      "Introduced the codebase's first test target (Swift Testing, ~30 tests) with pre-commit hooks.",
     ],
   },
   {
@@ -48,50 +59,46 @@ export const experience = [
     when: "July 2023 – April 2026",
     href: "/posts/wells-fargo-data-engineering",
     bullets: [
-      "Designed and ran a high-throughput migration pipeline (NoSQL to SQL) from critical legacy systems to Google Cloud with zero data loss, and refactored Python ETL scripts to cut processing latency by 60%.",
-      "Led monthly production deployments, coordinating code integration across multiple teams and enforcing SDLC standards.",
-      "Previously interned (Summer 2022): won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.",
+      "Designed and ran the migration pipeline moving [volume] from legacy NoSQL systems to SQL on Google Cloud with zero data loss; refactored the Python ETL layer, cutting processing time from [A] to [B].",
+      "Led monthly production deployments integrating changes from [N] teams under bank change-control; [reliability claim with number].",
     ],
   },
 ]
 
 /**
  * Project entry:
- *   name, role: rendered as "name | role" (web) and "name (role)" (PDF)
+ *   name: product name
  *   blurb: optional one-line description; stack: tech list
  *   subtitle becomes "blurb (stack)" on web, "blurb -- stack" on PDF, or just stack if no blurb
  */
 export const projects = [
   {
-    name: "TAPE",
-    role: "Creator",
-    blurb: "Fight analytics from broadcast video",
-    stack: "Python, PyTorch, Next.js",
-    href: "/posts/tape-mma-fight-intelligence",
-    bullets: [
-      "Built an end-to-end computer-vision system that turns single-camera MMA broadcasts into verified fight analytics: high-recall strike detection with a human-in-the-loop verification workflow, and a live site with per-fighter reports across 22 fighters.",
-    ],
-  },
-  {
     name: "SHARP Memories",
-    role: "Creator",
     stack: "iOS, Web, visionOS",
     href: "/posts/sharp-memories",
     bullets: [
-      "Built a cross-platform app that converts a single 2D photo into a 3D Gaussian Splat via an event-driven serverless GPU pipeline; an iOS App Clip (< 15MB) lets recipients view shared memories from an iMessage link with no install. Live on the web and the App Store.",
+      "Built a cross-platform app (iOS, web, visionOS) converting a single 2D photo into a 3D Gaussian Splat via an event-driven serverless GPU pipeline; a <15MB iOS App Clip lets recipients view shared memories from an iMessage link with no install. Live on the App Store.",
     ],
   },
   {
     name: "Vantage Sports",
-    role: "Creator",
     stack: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
-      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with an engaged user base and broadcast partnerships with Mixed Martial Arts promotions across the United States; extracted the SharePlay synchronization engine into the open-source ImmersiveWatchParty SDK.",
+      "Launched a subscription immersive streaming app on iOS and Apple Vision Pro; signed broadcast partnerships with three U.S. MMA promotions. Extracted the SharePlay sync engine into ImmersiveWatchParty, an open-source SDK.",
     ],
     links: {
-      "ImmersiveWatchParty SDK": "https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK",
+      ImmersiveWatchParty: "https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK",
     },
+  },
+  {
+    name: "TAPE",
+    blurb: "Fight analytics from broadcast video",
+    stack: "Python, PyTorch, Next.js",
+    href: "/posts/tape-mma-fight-intelligence",
+    bullets: [
+      "Built an end-to-end computer-vision system turning single-camera MMA broadcasts into verified fight analytics: a detector with ~96% generation recall and human-in-the-loop verification; a PoseC3D 3D CNN stacked into CatBoost reached 0.899 AUC across 9,576 labeled windows from 14 fights.",
+    ],
   },
 ]
 
