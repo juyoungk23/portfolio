@@ -60,7 +60,7 @@ export const experience = [
     href: "/posts/wells-fargo-data-engineering",
     bullets: [
       "Designed and ran the migration pipeline moving hundreds of millions of records from legacy NoSQL systems to SQL on Google Cloud with zero data loss; refactored the Python ETL layer, cutting processing time by 60%.",
-      "Led monthly production deployments, integrating changes from three teams using Agile methodologies.",
+      "Led monthly production deployments integrating changes from three teams under bank change-control.",
     ],
   },
 ]
