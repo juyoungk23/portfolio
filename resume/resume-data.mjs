@@ -47,7 +47,7 @@ export const experience = [
       "Co-built Pods, Poppy's long-running agentic tasks that handle goals over days or weeks rather than a single prompt; own the Pods backend and the SwiftUI client that renders agent output as native charts, chips, and deep links.",
       "Built cross-device handoff: a suggestion on iPhone or Watch opens the meeting link on the Mac, via a WatchConnectivity relay into MultipeerConnectivity.",
       "Built two-way sync with Apple Reminders via EventKit, Poppy's backend as source of truth: offline edits and deletions reconcile on re-sync, and delivery-ownership logic guarantees exactly one alarm fires.",
-      "Built the health layer merging HealthKit and Oura Ring data (deduplicating overlapping Watch and ring signals) and shipped sleep briefings that explain scores using the user's life context.",
+      "Built the health layer merging HealthKit and Oura Ring data (deduplicating overlapping Watch and ring signals) and shipped sleep briefings that explain scores using calendar and message context from the user's actual day.",
       "Own product analytics end to end: built the Mixpanel pipeline from zero, dashboards, and weekly metrics reports; shipped a redesigned onboarding flow that reached ~60% completion through OTP verification and paywall.",
       "Introduced the codebase's first test target (Swift Testing, ~30 tests) with pre-commit hooks.",
     ],
@@ -59,8 +59,8 @@ export const experience = [
     when: "July 2023 – April 2026",
     href: "/posts/wells-fargo-data-engineering",
     bullets: [
-      "Designed and ran the migration pipeline moving [volume] from legacy NoSQL systems to SQL on Google Cloud with zero data loss; refactored the Python ETL layer, cutting processing time from [A] to [B].",
-      "Led monthly production deployments integrating changes from [N] teams under bank change-control; [reliability claim with number].",
+      "Designed and ran the migration pipeline moving hundreds of millions of records from legacy NoSQL systems to SQL on Google Cloud with zero data loss; refactored the Python ETL layer, cutting processing time by 60%.",
+      "Led monthly production deployments, integrating changes from three teams using Agile methodologies.",
     ],
   },
 ]
@@ -97,7 +97,7 @@ export const projects = [
     stack: "Python, PyTorch, Next.js",
     href: "/posts/tape-mma-fight-intelligence",
     bullets: [
-      "Built an end-to-end computer-vision system turning single-camera MMA broadcasts into verified fight analytics: a detector with ~96% generation recall and human-in-the-loop verification; a PoseC3D 3D CNN stacked into CatBoost reached 0.899 AUC across 9,576 labeled windows from 14 fights.",
+      "Built an end-to-end computer-vision system turning single-camera MMA broadcasts into verified fight analytics: strike detection at ~96% recall with human-in-the-loop verification, trained and evaluated on 9,500+ labeled windows across 14 fights; live site with per-fighter reports.",
     ],
   },
 ]
