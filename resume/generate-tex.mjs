@@ -44,9 +44,11 @@ const itemize = (bullets, links) =>
   ["\\begin{itemize}", ...bullets.map((b) => `  \\item ${escWithLinks(b, links)}`), "\\end{itemize}"].join("\n")
 
 const contact = [
-  `  ${esc(header.location)} (${esc(header.citizenship)}) $|$ ${esc(header.phone)} $|$ \\href{mailto:${header.email}}{${esc(header.email)}} \\\\`,
-  `  \\href{${header.website.url}}{${esc(header.website.label)}} $|$ \\href{${header.linkedin.url}}{${esc(header.linkedin.label)}} $|$ \\href{${header.github.url}}{${esc(header.github.label)}}`,
+  `  ${esc(header.location)} (${esc(header.citizenship)}) $|$ ${esc(header.phone)} $|$ \\href{${header.website.url}}{${esc(header.website.label)}} \\\\`,
+  `  \\href{mailto:${header.email}}{${esc(header.email)}} $|$ \\href{${header.linkedin.url}}{${esc(header.linkedin.label)}} $|$ \\href{${header.github.url}}{${esc(header.github.label)}}`,
 ].join("\n")
+
+const skillsTex = skills.map((skill) => `\\textbf{${esc(skill.label)}:} ${esc(skill.items)}`).join(" \\\\\n")
 
 const experienceTex = experience
   .map((e) => `\\jobheader{${esc(e.role)}}{${esc(e.when)}}{${esc(e.org)}}{${esc(e.location)}}\n${itemize(e.bullets, e.links)}`)
@@ -74,7 +76,7 @@ const body = [
   "",
   "\\section*{Skills}",
   "",
-  esc(skills),
+  skillsTex,
   "",
   "\\section*{Work Experience}",
   "",

@@ -147,7 +147,14 @@ export default function ResumePage() {
       </div>
 
       <SectionHeading>Skills</SectionHeading>
-      <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{skills}</p>
+      <div className="mt-4 space-y-1 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        {skills.map((skill) => (
+          <p key={skill.label}>
+            <span className="font-semibold text-slate-900 dark:text-slate-100">{skill.label}:</span>{" "}
+            {skill.items}
+          </p>
+        ))}
+      </div>
 
       <SectionHeading>Work Experience</SectionHeading>
       {EXPERIENCE.map((e) => (

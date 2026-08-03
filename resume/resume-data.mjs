@@ -15,8 +15,18 @@ export const header = {
   github: { label: "github.com/juyoungk23", url: "https://github.com/juyoungk23" },
 }
 
-export const skills =
-  "Swift/SwiftUI, Swift 6 concurrency, Python, TypeScript, SQL · React, Next.js, Supabase (Postgres), GCP · computer vision, LLM integration (Claude, Gemini) · RealityKit, AR/VR, 3D Gaussian Splatting"
+export const skills = [
+  {
+    label: "Apple platforms",
+    items:
+      "Swift 6 / SwiftUI, RealityKit, visionOS, EventKit, HealthKit, WatchConnectivity, MultipeerConnectivity, SharePlay, App Clips, Swift Testing",
+  },
+  {
+    label: "AI & backend",
+    items:
+      "LLM integration (Claude, Gemini), computer vision (PyTorch), 3D Gaussian Splatting, Python, GCP, Supabase (Postgres), Next.js",
+  },
+]
 
 /**
  * Experience entry:
