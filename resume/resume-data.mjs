@@ -59,9 +59,8 @@ export const experience = [
     when: "July 2023 – April 2026",
     href: "/posts/wells-fargo-data-engineering",
     bullets: [
-      "Designed and ran a high-throughput migration pipeline (NoSQL to SQL) from critical legacy systems to Google Cloud with zero data loss, and refactored Python ETL scripts to cut processing latency by 60%.",
-      "Led monthly production deployments, coordinating code integration across multiple teams and enforcing SDLC standards.",
-      "Previously interned (Summer 2022): won 1st place in the company AI Hackathon with a voice-impersonation detector built on Google Vertex AI and audio spectrogram classification.",
+      "Designed and ran the migration pipeline moving [volume] from legacy NoSQL systems to SQL on Google Cloud with zero data loss; refactored the Python ETL layer, cutting processing time from [A] to [B].",
+      "Led monthly production deployments integrating changes from [N] teams under bank change-control; [reliability claim with number].",
     ],
   },
 ]
