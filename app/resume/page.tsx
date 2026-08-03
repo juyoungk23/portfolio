@@ -20,7 +20,6 @@ type ExperienceEntry = {
 
 type ProjectEntry = {
   name: string
-  role: string
   blurb?: string
   stack: string
   href?: string
@@ -169,11 +168,11 @@ export default function ResumePage() {
         />
       ))}
 
-      <SectionHeading>Technical Projects</SectionHeading>
+      <SectionHeading>Independent Products</SectionHeading>
       {PROJECTS.map((p) => (
         <EntryBlock
           key={p.name}
-          title={`${p.name} | ${p.role}`}
+          title={p.name}
           subtitle={p.blurb ? `${p.blurb} (${p.stack})` : p.stack}
           href={p.href}
           bullets={p.bullets}

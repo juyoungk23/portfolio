@@ -57,7 +57,7 @@ const experienceTex = experience
 const projectsTex = projects
   .map((p) => {
     const sub = p.blurb ? `${p.blurb} – ${p.stack}` : p.stack
-    return `\\projectheader{${esc(`${p.name} (${p.role})`)}}{${esc(sub)}}\n${itemize(p.bullets, p.links)}`
+    return `\\projectheader{${esc(p.name)}}{${esc(sub)}}\n${itemize(p.bullets, p.links)}`
   })
   .join("\n\n")
 
@@ -82,7 +82,7 @@ const body = [
   "",
   experienceTex,
   "",
-  "\\section*{Technical Projects}",
+  "\\section*{Independent Products}",
   "",
   projectsTex,
   "",

@@ -67,41 +67,38 @@ export const experience = [
 
 /**
  * Project entry:
- *   name, role: rendered as "name | role" (web) and "name (role)" (PDF)
+ *   name: product name
  *   blurb: optional one-line description; stack: tech list
  *   subtitle becomes "blurb (stack)" on web, "blurb -- stack" on PDF, or just stack if no blurb
  */
 export const projects = [
   {
-    name: "TAPE",
-    role: "Creator",
-    blurb: "Fight analytics from broadcast video",
-    stack: "Python, PyTorch, Next.js",
-    href: "/posts/tape-mma-fight-intelligence",
-    bullets: [
-      "Built an end-to-end computer-vision system that turns single-camera MMA broadcasts into verified fight analytics: high-recall strike detection with a human-in-the-loop verification workflow, and a live site with per-fighter reports across 22 fighters.",
-    ],
-  },
-  {
     name: "SHARP Memories",
-    role: "Creator",
     stack: "iOS, Web, visionOS",
     href: "/posts/sharp-memories",
     bullets: [
-      "Built a cross-platform app that converts a single 2D photo into a 3D Gaussian Splat via an event-driven serverless GPU pipeline; an iOS App Clip (< 15MB) lets recipients view shared memories from an iMessage link with no install. Live on the web and the App Store.",
+      "Built a cross-platform app (iOS, web, visionOS) converting a single 2D photo into a 3D Gaussian Splat via an event-driven serverless GPU pipeline; a <15MB iOS App Clip lets recipients view shared memories from an iMessage link with no install. Live on the App Store.",
     ],
   },
   {
     name: "Vantage Sports",
-    role: "Creator",
     stack: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
-      "Launched a subscription immersive streaming app on the iOS App Store and Apple Vision Pro with an engaged user base and broadcast partnerships with Mixed Martial Arts promotions across the United States; extracted the SharePlay synchronization engine into the open-source ImmersiveWatchParty SDK.",
+      "Launched a subscription immersive streaming app on iOS and Apple Vision Pro; signed broadcast partnerships with three U.S. MMA promotions. Extracted the SharePlay sync engine into ImmersiveWatchParty, an open-source SDK.",
     ],
     links: {
-      "ImmersiveWatchParty SDK": "https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK",
+      ImmersiveWatchParty: "https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK",
     },
+  },
+  {
+    name: "TAPE",
+    blurb: "Fight analytics from broadcast video",
+    stack: "Python, PyTorch, Next.js",
+    href: "/posts/tape-mma-fight-intelligence",
+    bullets: [
+      "Built an end-to-end computer-vision system turning single-camera MMA broadcasts into verified fight analytics: a detector with ~96% generation recall and human-in-the-loop verification; a PoseC3D 3D CNN stacked into CatBoost reached 0.899 AUC across 9,576 labeled windows from 14 fights.",
+    ],
   },
 ]
 
