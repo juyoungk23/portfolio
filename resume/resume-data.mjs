@@ -59,7 +59,7 @@ export const experience = [
     when: "July 2023 – April 2026",
     href: "/posts/wells-fargo-data-engineering",
     bullets: [
-      "Designed and ran the migration pipeline moving hundreds of millions of records from legacy NoSQL systems to SQL on Google Cloud with zero data loss; refactored the Python ETL layer, cutting processing time by 60%.",
+      "Backend infrastructure on data migration to Google Cloud. Designed and ran the pipeline moving hundreds of millions of records from legacy on-prem systems to GCP SQL with zero data loss, and refactored the Python ETL layer to cut processing time by 60%.",
       "Led monthly production deployments integrating changes from three teams under bank change-control.",
     ],
   },
