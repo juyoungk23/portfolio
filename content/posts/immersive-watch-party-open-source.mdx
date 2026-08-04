@@ -1,0 +1,50 @@
+---
+title: "Open Sourcing ImmersiveWatchParty"
+description: (visionOS, RealityKit) Why I'm open-sourcing the SharePlay co-watching SDK I built for Vantage, and what's still missing from Apple's native APIs.
+date: "2026-08-04"
+---
+
+Today, I'm open-sourcing the **ImmersiveWatchParty SDK**, a project I've been working on since the start of 2024.
+
+The original idea was simple: immersive video is already compelling on its own, but how much better would it be to watch it with friends? Sports, music, concerts, comedy, plays, whatever you're into.
+
+<Image src="/immersivewatchparty.jpg" width={1200} height={630} alt="Two Spatial Personas watching synced immersive video side by side" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nAG6AEX/AFIfJbNSWfN9h+VlZZ1NU09FTwAECUU3ORAQFQUJEABNLC9pNTfaaWbSV1SCUFo/N0AbFxn9vrAQEBQECQ8AaioxijIxtUc24F1FbysvMCcpOS8zyp2YbE9MBQYNAJRYZ/aFiv+Njf+DhrBwelpDQvK5qv/Er//pyxIQEgD/zdjUqbm7l6qchJWql6o9MztVPkhVQU2+ioAXFBcAlIKShW1+h3B/gG17w6y7IBsjAQUQFhYjExEbDAwSVnNFmN7jRt4AAAAASUVORK5CYII=" />
+
+## Where it started
+
+In November of 2024, I started building a feature that lets people call each other on FaceTime with their Spatial Personas and watch the same immersive video together. It took a lot of trial and error to build and test, especially because it required testing with other visionOS users, and the visionOS community, while small, is tight-knit. With help from a lot of friends, I got the feature working in [Vantage](/posts/vantage-vr-sports-platform), my own immersive combat sports streaming app.
+
+After integrating the co-watching feature into Vantage, I decided it would be worth extracting it into its own standalone SDK and Swift package. That's what I'm releasing today.
+
+## The gap in Apple's native APIs
+
+Along the way I ran into a real limitation in Apple's own frameworks: the native video player APIs can't render Spatial Personas side by side while watching immersive content, even with SharePlay active. Oddly, Personas can sit side by side and watch a regular 2D movie together, even inside an immersive movie theater scene. Apple just hasn't shipped the ability to sit side by side while watching stereoscopic video.
+
+<Image src="/avplakers.jpg" width={1200} height={630} alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
+
+[OpenImmersive](https://github.com/acuteimmersive/openimmersive), maintained by Anthony Maës and Acute Immersive and derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer) by [Mike Swanson](https://blog.mikeswanson.com/), turned out to be the key. A lot of the immersive video community still relies on RealityKit-based video players because they give you lower-level access, letting you insert side-by-side Personas into the same scene as the stereoscopic video player.
+
+That's the honest trade-off if you want to integrate this into your own app: you have to give up Apple's native video player APIs, because they're too high-level to link Spatial Personas side by side into the same scene. Until Apple fixes that, this is the workaround.
+
+## Beyond video sync
+
+Even if Apple eventually fixes that gap, I don't think they'll ship everything I've built into this SDK anytime soon, namely the ability to place 3D objects into the same scene you're sitting in.
+
+Picture this: you're watching an NBA Lakers game in immersive video, sitting side by side with friends. An advertiser selling shampoo could drop a 3D model of the bottle into the scene during the ad break, and everyone watching could play with it. That's useful for advertising, but it's just as useful for the game itself. Think stat overlays rendered as 3D models in real time, or the trajectory of the ball tracked and visualized on the court while the game is live. That's what this SDK enables.
+
+## What I learned about SharePlay
+
+SharePlay is really just a shared message channel. Devices in the same group activity post messages to it. Your device isn't being directly controlled by anyone else. Person A pushes a message to the channel, something like "update UI: switch to this tab." Person B detects that message and decides whether to update their own UI. Each participant chooses, on their own device, whether and how to act on what comes through.
+
+I figured this out using the [SharePlayMock repository](https://github.com/Pixeland-Tech/SharePlayMock) built by Pixeland-Tech. It let me test the whole flow on my own laptop with two simulator instances talking over a Java server running locally, so I could check whether a tab click or page navigation on one device correctly reached the other. SharePlayMock doesn't let you touch the real SharePlay API, though, so to test the actual end-to-end flow I had to ask friends I'd found through Vision Pro communities to test it with me on real devices.
+
+There were plenty of frustrating bugs along the way, but the process was eye-opening.
+
+<Image src="/immersivewatchparty-github.png" width={1200} height={630} alt="The ImmersiveWatchParty SDK GitHub repository" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAYAAAAxrNxjAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA8klEQVR4nEXMMUvDUBSG4Yv/qeBPEMXJVVyUbi4i7qYdapG2OjhZhzYtVKzUm5BqkkItSiFZQhbN0gRF0010CXV5xRvQ4R0O5+ETlcoRO8Wiqnd5xWTywPDORhpDLlo6rbaubgHQ719zqJWxnRFPzxFRFLG5vcvKxhavLwnvaZrDW9ul3jjB93033R6zOFbpnS5BEPySHLruCM/zyLIMaZgkSaJq67pa/4OWZaFpGufNJqVSGcdx1HMgTR6n3j+sN04RYgkhBPt7B4zvx4RhiBzccFar8RbPcmiaFoXCMmur61Srx2pZGgbzecrX5wffiwU/r+Ha9B4QnXwAAAAASUVORK5CYII=" />
+
+## Try it yourself
+
+The SDK is public now: [github.com/juyoungk23/ImmersiveWatchParty-SDK](https://github.com/juyoungk23/ImmersiveWatchParty-SDK). Fork it, open an issue, send a pull request, whatever's useful to you. I'd love to see what people build with this.
+
+Sincerely,
+Juyoung
