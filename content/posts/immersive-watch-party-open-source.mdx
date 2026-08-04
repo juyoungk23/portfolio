@@ -1,6 +1,6 @@
 ---
 title: "Open Sourcing ImmersiveWatchParty"
-description: (visionOS, RealityKit) Why I'm open-sourcing the SharePlay co-watching SDK I built for Vantage, and what's still missing from Apple's native APIs.
+description: (Open Source, visionOS, RealityKit) Why I'm open-sourcing the SharePlay co-watching SDK, and what's still missing from Apple's native APIs.
 date: "2026-08-04"
 ---
 
@@ -8,7 +8,7 @@ Today, I'm open-sourcing the **ImmersiveWatchParty SDK**, a project I've been wo
 
 The original idea was simple: immersive video is already compelling on its own, but how much better would it be to watch it with friends? Sports, music, concerts, comedy, plays, whatever you're into.
 
-<Image src="/immersivewatchparty.jpg" width={1200} height={630} alt="Two Spatial Personas watching synced immersive video side by side" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nAG6AEX/AFIfJbNSWfN9h+VlZZ1NU09FTwAECUU3ORAQFQUJEABNLC9pNTfaaWbSV1SCUFo/N0AbFxn9vrAQEBQECQ8AaioxijIxtUc24F1FbysvMCcpOS8zyp2YbE9MBQYNAJRYZ/aFiv+Njf+DhrBwelpDQvK5qv/Er//pyxIQEgD/zdjUqbm7l6qchJWql6o9MztVPkhVQU2+ioAXFBcAlIKShW1+h3B/gG17w6y7IBsjAQUQFhYjExEbDAwSVnNFmN7jRt4AAAAASUVORK5CYII=" />
+<Image src="/avplakers.jpg" width={1200} height={630} alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
 
 ## Where it started
 
@@ -20,7 +20,7 @@ After integrating the co-watching feature into Vantage, I decided it would be wo
 
 Along the way I ran into a real limitation in Apple's own frameworks: the native video player APIs can't render Spatial Personas side by side while watching immersive content, even with SharePlay active. Oddly, Personas can sit side by side and watch a regular 2D movie together, even inside an immersive movie theater scene. Apple just hasn't shipped the ability to sit side by side while watching stereoscopic video.
 
-<Image src="/avplakers.jpg" width={1200} height={630} alt="Diagram showing local coordinate space vs shared coordinate space" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAxUlEQVR4nAG6AEX/ABsSBhsTCgwLFwYGFQwLFwkIFQABEwYGFQQEEQQGFgAeEgAZDwAHCBkYGCIYFyEgHShNPz0pJisnISgWFiIAHAMAHw8AMjEsNzEzCAoaAAAciWswlWweelctTjw0ABoDAE5HPWlCJGVHOZB2aHRaSIVoRJt4Tq2OfrGVjQAfDAB4Z0htNACIWR+tlXb/06b/0Z/jv6rVspzvza8AGhIBJAsAiVwbya6Gta+euLSn//HK//TE//LF/+vAFRA4s+if7TkAAAAASUVORK5CYII=" />
+<Image src="/immersivewatchparty.jpg" width={1200} height={630} alt="Two Spatial Personas watching synced immersive video side by side" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nAG6AEX/AFIfJbNSWfN9h+VlZZ1NU09FTwAECUU3ORAQFQUJEABNLC9pNTfaaWbSV1SCUFo/N0AbFxn9vrAQEBQECQ8AaioxijIxtUc24F1FbysvMCcpOS8zyp2YbE9MBQYNAJRYZ/aFiv+Njf+DhrBwelpDQvK5qv/Er//pyxIQEgD/zdjUqbm7l6qchJWql6o9MztVPkhVQU2+ioAXFBcAlIKShW1+h3B/gG17w6y7IBsjAQUQFhYjExEbDAwSVnNFmN7jRt4AAAAASUVORK5CYII=" />
 
 [OpenImmersive](https://github.com/acuteimmersive/openimmersive), maintained by Anthony Maës and Acute Immersive and derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer) by [Mike Swanson](https://blog.mikeswanson.com/), turned out to be the key. A lot of the immersive video community still relies on RealityKit-based video players because they give you lower-level access, letting you insert side-by-side Personas into the same scene as the stereoscopic video player.
 
