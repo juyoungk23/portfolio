@@ -49,7 +49,6 @@ export const experience = [
       "Built two-way sync with Apple Reminders via EventKit, Poppy's backend as source of truth: offline edits and deletions reconcile on re-sync, and delivery-ownership logic guarantees exactly one alarm fires.",
       "Built the health layer merging HealthKit and Oura Ring data (deduplicating overlapping Watch and ring signals) and shipped sleep briefings that explain scores using calendar and message context from the user's actual day.",
       "Own product analytics end to end: built the Mixpanel pipeline from zero, dashboards, and weekly metrics reports; shipped a redesigned onboarding flow that reached ~60% completion through OTP verification and paywall.",
-      "Introduced the codebase's first test target (Swift Testing, ~30 tests) with pre-commit hooks.",
     ],
   },
   {
@@ -85,10 +84,11 @@ export const projects = [
     stack: "SwiftUI, iOS, visionOS",
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
-      "Launched a subscription immersive streaming app on iOS and Apple Vision Pro; signed broadcast partnerships with three U.S. MMA promotions. Extracted the SharePlay sync engine into ImmersiveWatchParty, an open-source SDK.",
+      "Launched a subscription immersive streaming app on iOS and Apple Vision Pro; signed broadcast partnerships with three U.S. MMA promotions.",
+      "Built synchronized co-watching with Spatial Personas using custom RealityKit rendering that seats friends' Personas side by side for stereoscopic video and live HLS streams—unsupported by Apple's native player; open-sourced as ImmersiveWatchParty (github.com/juyoungk23/ImmersiveWatchParty-SDK).",
     ],
     links: {
-      ImmersiveWatchParty: "https://github.com/Vantage-Kit/ImmersiveWatchParty-SDK",
+      "github.com/juyoungk23/ImmersiveWatchParty-SDK": "https://github.com/juyoungk23/ImmersiveWatchParty-SDK",
     },
   },
   {
