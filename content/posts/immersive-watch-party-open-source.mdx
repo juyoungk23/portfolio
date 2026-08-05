@@ -12,7 +12,9 @@ The original idea was simple: immersive video is already compelling on its own, 
 
 ## Where it started
 
-I started building a feature that lets people call each other on FaceTime with their Spatial Personas and watch the same immersive video together. It took a lot of trial and error to build and test, especially because it required testing with other visionOS users, and the visionOS community, while small, is tight-knit. With help from a lot of friends, I got the feature working in [Vantage](/posts/vantage-vr-sports-platform), my own immersive combat sports streaming app.
+I started building a feature that lets people call each other on FaceTime with their Spatial Personas and watch the same immersive video together. It took a lot of trial and error to build and test, especially because it required testing with other visionOS users, and the visionOS community, while small, is tight-knit.
+
+For me, the thought of sitting cage-side at a UFC event with my friends, reacting to every technique and knockout blow, is what propelled me to build [Vantage](/posts/vantage-vr-sports-platform), my own immersive combat sports platform. With modern mixed-reality devices, that's actually becoming possible now. But I found that pulling it off takes more than just a video player, it takes a dedicated synchronization engine. So I built one, and with help from a lot of friends, got the co-watching feature working inside Vantage.
 
 After integrating the co-watching feature into Vantage, I decided it would be worth extracting it into its own standalone SDK and Swift package. That's what I'm releasing today.
 
@@ -22,7 +24,9 @@ Along the way I ran into a real limitation in Apple's own frameworks: the native
 
 <Image src="/immersivewatchparty.jpg" width={1200} height={630} alt="Two Spatial Personas watching synced immersive video side by side" placeholder="blur" blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAIAAAB1kpiRAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxUlEQVR4nAG6AEX/AFIfJbNSWfN9h+VlZZ1NU09FTwAECUU3ORAQFQUJEABNLC9pNTfaaWbSV1SCUFo/N0AbFxn9vrAQEBQECQ8AaioxijIxtUc24F1FbysvMCcpOS8zyp2YbE9MBQYNAJRYZ/aFiv+Njf+DhrBwelpDQvK5qv/Er//pyxIQEgD/zdjUqbm7l6qchJWql6o9MztVPkhVQU2+ioAXFBcAlIKShW1+h3B/gG17w6y7IBsjAQUQFhYjExEbDAwSVnNFmN7jRt4AAAAASUVORK5CYII=" />
 
-[OpenImmersive](https://github.com/acuteimmersive/openimmersive), maintained by Anthony Maës and Acute Immersive and derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer) by [Mike Swanson](https://blog.mikeswanson.com/), turned out to be the key. A lot of the immersive video community still relies on RealityKit-based video players because they give you lower-level access, letting you insert side-by-side Personas into the same scene as the stereoscopic video player.
+[OpenImmersive](https://github.com/acuteimmersive/openimmersive), maintained by Anthony Maës and Acute Immersive and derived from [Spatial Player](https://github.com/mikeswanson/SpatialPlayer) by [Mike Swanson](https://blog.mikeswanson.com/), turned out to be the key. Spatial Player was the original open-source project built on RealityKit to render stereoscopic VR180 video, back when visionOS 1.0 had no native immersive video player API at all.
+
+Apple eventually shipped its own high-level AVPlayer-based implementation with native immersive video support in a later visionOS release. When I upgraded my own app to use it, I ran into a compatibility flaw: it doesn't let Spatial Personas sit side by side while watching immersive video. The native player has real upsides too, easier to work with, more robust, backed by Apple's own development standards, and smoother with live HLS streaming, but that one flaw was a dealbreaker. So I stayed on the RealityKit-based implementation and kept building on top of it.
 
 That's the honest trade-off if you want to integrate this into your own app: you have to give up Apple's native video player APIs, because they're too high-level to link Spatial Personas side by side into the same scene. Until Apple fixes that, this is the workaround.
 
