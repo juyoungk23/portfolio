@@ -85,7 +85,7 @@ export const projects = [
     href: "/posts/vantage-vr-sports-platform",
     bullets: [
       "Launched a subscription immersive streaming app on iOS and Apple Vision Pro; signed broadcast partnerships with three U.S. MMA promotions.",
-      "Built synchronized co-watching with Spatial Personas using custom RealityKit rendering that seats friends' Personas side by side for stereoscopic video and live HLS streams—unsupported by Apple's native player; open-sourced as ImmersiveWatchParty (github.com/juyoungk23/ImmersiveWatchParty-SDK).",
+      "Built synchronized co-watching with Spatial Personas: a custom RealityKit rendering architecture that keeps friends' Personas seated side by side during stereoscopic video, including live HLS streams, which Apple's native player still can't do; open-sourced it as ImmersiveWatchParty (github.com/juyoungk23/ImmersiveWatchParty-SDK).",
     ],
     links: {
       "github.com/juyoungk23/ImmersiveWatchParty-SDK": "https://github.com/juyoungk23/ImmersiveWatchParty-SDK",
